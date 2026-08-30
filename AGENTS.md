@@ -1,12 +1,5 @@
-<!-- LOVABLE:BEGIN -->
+# Repository ownership
 
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
+This repository is the canonical source for the Proof & State website. Lovable supplied the initial design scaffold only; the project is not hosted or deployed through Lovable and Lovable is not a source-of-truth remote.
 
-<!-- LOVABLE:END -->
+Keep `main` deployable. Use pull requests for changes, preserve published history, and do not force-push shared branches. Production deploys from GitHub to the `proof-and-state-website` Cloudflare Worker using the committed Wrangler configuration.

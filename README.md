@@ -3,11 +3,10 @@
 This repository is the independently owned source of truth for the Proof & State public frontend.
 
 - Canonical domain: [proofandstate.com](https://proofandstate.com)
-- Published preview: [proof-state-forge.lovable.app](https://proof-state-forge.lovable.app)
 - Website source: [AyobamiH/proof-and-state-website](https://github.com/AyobamiH/proof-and-state-website)
 - Governance and evidence: [AyobamiH/proof-and-state](https://github.com/AyobamiH/proof-and-state)
 
-Lovable was used to scaffold and publish the initial frontend. It is not the canonical source repository. The first owned snapshot maps Lovable commit `fa6f7271f2e15791578df335ecaba738ff401710` to repository import commit `852bf86763bd03ec8447be448637976438def2f3`.
+Lovable was used only to scaffold the initial design direction. It is not the source, deployment, hosting, or domain authority. The first owned snapshot maps Lovable commit `fa6f7271f2e15791578df335ecaba738ff401710` to repository import commit `852bf86763bd03ec8447be448637976438def2f3`.
 
 ## Local development
 
@@ -31,6 +30,17 @@ bun run build
 ```
 
 The production build is emitted to `.output/`.
+
+## Deployment
+
+Production is deployed from this repository to the `proof-and-state-website` Cloudflare Worker. The committed Wrangler configuration attaches both `proofandstate.com` and `www.proofandstate.com`; the Worker redirects `www` requests to the canonical root domain with HTTP 308.
+
+The deployment workflow runs only after changes reach `main` and requires these GitHub Actions secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Lovable is not part of the production request or deployment path.
 
 ## Truth boundaries
 
