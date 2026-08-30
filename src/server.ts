@@ -44,9 +44,22 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+function redirectToCanonicalHostname(request: Request): Response | undefined {
+  const url = new URL(request.url);
+  if (url.hostname.toLowerCase() !== "www.proofandstate.com") return undefined;
+
+  url.protocol = "https:";
+  url.hostname = "proofandstate.com";
+  url.port = "";
+  return Response.redirect(url, 308);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const redirect = redirectToCanonicalHostname(request);
+      if (redirect) return redirect;
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
