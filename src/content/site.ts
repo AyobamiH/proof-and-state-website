@@ -7,7 +7,7 @@ export const SITE_NAME = "Proof & State";
 export const SITE_URL = "https://proofandstate.com";
 export const SITE_TAGLINE = "Accountability infrastructure for autonomous engineering";
 
-export const GITHUB_URL = "https://github.com/AyobamiH";
+export const GITHUB_URL = "https://github.com/AyobamiH/proof-and-state-website";
 export const CONTACT_EMAIL = "hello@proofandstate.com";
 export const SECURITY_EMAIL = "security@proofandstate.com";
 
