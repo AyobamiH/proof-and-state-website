@@ -22,7 +22,7 @@ export function SiteFooter() {
               rel="noreferrer noopener"
               className="mt-5 inline-block font-mono text-[0.75rem] text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
             >
-              github.com/AyobamiH
+              github.com/AyobamiH/proof-and-state-website
             </a>
           </div>
 
