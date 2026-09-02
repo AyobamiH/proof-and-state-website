@@ -64,15 +64,22 @@ jobs:
           set -euo pipefail
 
           for attempt in $(seq 1 18); do
-            if curl --fail --silent --show-error https://proofandstate.com/ | grep --fixed-strings --quiet "Make agent work provable."; then
+            homepage="$(curl --fail --silent --show-error https://proofandstate.com/ || true)"
+            if grep --fixed-strings --quiet "Let AI move faster without losing review." <<<"$homepage" \
+              && ! grep --fixed-strings --quiet "AWAITING_VERIFICATION" <<<"$homepage"; then
               break
             fi
             if [ "$attempt" -eq 18 ]; then
-              echo "Canonical homepage did not become ready" >&2
+              echo "Canonical homepage did not expose the current public product story" >&2
               exit 1
             fi
             sleep 10
           done
+
+          status_page="$(curl --fail --silent --show-error https://proofandstate.com/status)"
+          grep --fixed-strings --quiet "Current product reality" <<<"$status_page"
+          grep --fixed-strings --quiet "AgentProof" <<<"$status_page"
+          grep --fixed-strings --quiet "In development" <<<"$status_page"
 
           location="$(curl --silent --show-error --head https://www.proofandstate.com/ | awk 'BEGIN { IGNORECASE=1 } /^location:/ { sub(/\r$/, "", $2); print $2; exit }')"
           test "$location" = "https://proofandstate.com/"
