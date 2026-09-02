@@ -1,17 +1,15 @@
 /**
- * Site-level constants: identity, external sources, navigation and footer taxonomy.
- * Every route referenced here exists under src/routes.
+ * Public site identity, links and navigation.
+ * Internal implementation records live in the project repositories, not in public copy.
  */
 
 export const SITE_NAME = "Proof & State";
 export const SITE_URL = "https://proofandstate.com";
-export const SITE_TAGLINE = "Accountability infrastructure for autonomous engineering";
+export const SITE_TAGLINE = "Evidence for AI-assisted software delivery";
 
 export const GITHUB_URL = "https://github.com/AyobamiH/proof-and-state-website";
 export const CONTACT_EMAIL = "hello@proofandstate.com";
 export const SECURITY_EMAIL = "security@proofandstate.com";
-
-/** Canonical governance repository for the Proof & State system and this website. */
 export const GOVERNANCE_REPO_URL = "https://github.com/AyobamiH/proof-and-state";
 
 export const REPO_URLS = {
@@ -20,10 +18,6 @@ export const REPO_URLS = {
   agentproof: "https://github.com/AyobamiH/agentproof",
 } as const;
 
-/**
- * Canonical live endpoints. These are the addresses to link; historical
- * workers.dev hostnames are not canonical and are not published here.
- */
 export const SERVICE_URLS = {
   donestate: "https://donestate.proofandstate.com",
   donestateMcp: "https://donestate.proofandstate.com/mcp",
@@ -31,61 +25,48 @@ export const SERVICE_URLS = {
   opstruthMcp: "https://mcp.opstruth.io/mcp",
 } as const;
 
-/** DoneState distribution status. Review is not approval and not directory publication. */
-export const DONESTATE_REVIEW_STATUS =
-  "DoneState 0.2.0 is in OpenAI Review. It is not approved and not published to any directory.";
+export const OPSTRUTH_MARKETPLACE_URL = "https://github.com/marketplace/actions/opstruth-evidence";
 
-/** The one-sentence definition of the umbrella system, quoted verbatim site-wide. */
+export const DONESTATE_REVIEW_STATUS =
+  "DoneState is live on its owned service domain. DoneState 0.2.0 remains in OpenAI review, and its GitHub Marketplace listing is also under external review. Neither review state means approval or public listing there.";
+
+export const OPSTRUTH_STATUS =
+  "OpsTruth is publicly available as the opstruth-evidence GitHub Marketplace Action, with v1.0.0 and the stable v1 reference published.";
+
+export const AGENTPROOF_STATUS =
+  "AgentProof is in development. Its contract is defined, but downstream release work remains and it is not presented as a released product.";
+
 export const SYSTEM_DEFINITION =
-  "Proof & State is AI work accountability infrastructure: DoneState executes under declared authority, AgentProof authorises consequential actions and signs receipts, and OpsTruth verifies the result read-only from outside the execution path.";
+  "Proof & State builds tools that help teams use AI in software delivery with clearer boundaries, reviewable changes and evidence that can be checked independently.";
 
 export const NAV_GROUPS = [
   {
     label: "Products",
     to: "/products",
     items: [
-      { label: "Overview", to: "/products", note: "How the three layers relate" },
-      { label: "DoneState", to: "/donestate", note: "Durable execution and control plane" },
-      { label: "OpsTruth", to: "/products/opstruth", note: "Independent read-only verifier" },
-      {
-        label: "AgentProof",
-        to: "/products/agentproof",
-        note: "Authorised transactions and receipts",
-      },
-    ],
-  },
-  {
-    label: "Architecture",
-    to: "/architecture",
-    items: [
-      { label: "System topology", to: "/architecture", note: "The independence boundary" },
-      { label: "State model", to: "/architecture/state-model", note: "Run lifecycle and recovery" },
-      {
-        label: "Authority model",
-        to: "/architecture/authority-model",
-        note: "Envelopes and duties",
-      },
+      { label: "Overview", to: "/products", note: "What is available now and what is next" },
+      { label: "DoneState", to: "/donestate", note: "Reviewable repository maintenance" },
+      { label: "OpsTruth", to: "/products/opstruth", note: "Independent software evidence checks" },
+      { label: "AgentProof", to: "/products/agentproof", note: "In development" },
     ],
   },
   {
     label: "Trust",
     to: "/trust",
     items: [
-      { label: "Trust by architecture", to: "/trust", note: "Why structure beats assurance" },
-      { label: "Security", to: "/security", note: "Posture and disclosure" },
-      { label: "Principles", to: "/principles", note: "Long-form technical positions" },
-      { label: "Glossary", to: "/glossary", note: "Definitions of every term" },
+      { label: "How we build trust", to: "/trust", note: "Public commitments and limits" },
+      { label: "Security", to: "/security", note: "Security posture and disclosure" },
+      { label: "Open source", to: "/open-source", note: "Repositories and public releases" },
+      { label: "Status", to: "/status", note: "Current product and distribution status" },
     ],
   },
   {
-    label: "Developers",
-    to: "/developers",
+    label: "Company",
+    to: "/about",
     items: [
-      { label: "Developer gateway", to: "/developers", note: "Where to start" },
-      { label: "Quickstart", to: "/developers/quickstart", note: "First verified run" },
-      { label: "Integrations", to: "/developers/integrations", note: "Harness compatibility" },
-      { label: "Documentation", to: "/docs", note: "Reference index" },
-      { label: "Open source", to: "/open-source", note: "Repositories and licensing" },
+      { label: "About", to: "/about", note: "Why Proof & State exists" },
+      { label: "Changelog", to: "/changelog", note: "Published release record" },
+      { label: "Contact", to: "/contact", note: "Get in touch" },
     ],
   },
 ] as const;
@@ -101,39 +82,20 @@ export const FOOTER_COLUMNS = [
     ],
   },
   {
-    heading: "Architecture",
-    links: [
-      { label: "System topology", to: "/architecture" },
-      { label: "State model", to: "/architecture/state-model" },
-      { label: "Authority model", to: "/architecture/authority-model" },
-    ],
-  },
-  {
     heading: "Trust",
     links: [
-      { label: "Trust by architecture", to: "/trust" },
+      { label: "How we build trust", to: "/trust" },
       { label: "Security", to: "/security" },
-      { label: "Principles", to: "/principles" },
-      { label: "Glossary", to: "/glossary" },
-    ],
-  },
-  {
-    heading: "Developers",
-    links: [
-      { label: "Get started", to: "/developers" },
-      { label: "Quickstart", to: "/developers/quickstart" },
-      { label: "Integrations", to: "/developers/integrations" },
-      { label: "Documentation", to: "/docs" },
       { label: "Open source", to: "/open-source" },
+      { label: "Status", to: "/status" },
     ],
   },
   {
     heading: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Contact", to: "/contact" },
-      { label: "Status", to: "/status" },
       { label: "Changelog", to: "/changelog" },
+      { label: "Contact", to: "/contact" },
     ],
   },
 ] as const;
@@ -145,39 +107,36 @@ export const LEGAL_LINKS = [
 
 export const TRUST_STRIP = [
   {
-    label: "Read-only verification",
-    detail: "OpsTruth holds no write authority over any system it inspects.",
+    label: "Reviewable changes",
+    detail:
+      "Repository maintenance is prepared for review instead of being silently treated as finished.",
+    to: "/donestate",
+  },
+  {
+    label: "Independent checks",
+    detail: "OpsTruth inspects software evidence without changing the system it is checking.",
     to: "/products/opstruth",
   },
   {
-    label: "Signed receipts",
-    detail: "Approval is bound to exact prepared state before execution.",
-    to: "/products/agentproof",
+    label: "Clear product status",
+    detail: "Live, under review and in-development states are described separately.",
+    to: "/status",
   },
   {
-    label: "Crash-safe state",
-    detail: "Leases, idempotency keys and durable transitions on every run.",
-    to: "/architecture/state-model",
-  },
-  {
-    label: "No self-verification",
-    detail: "A run closes on independent attestation, not on agent report.",
-    to: "/trust",
+    label: "Source you can inspect",
+    detail: "Public claims are tied back to repositories and published releases where available.",
+    to: "/open-source",
   },
 ] as const;
 
-/**
- * Harnesses these tools are designed to work alongside. These are compatibility
- * targets and integration surfaces — not partnerships, endorsements or affiliations.
- */
 export const HARNESS_TARGETS = [
-  { name: "Codex", note: "CLI coding harness" },
-  { name: "Claude Code", note: "Terminal coding agent" },
-  { name: "Cursor", note: "Editor-resident agent" },
-  { name: "Lovable", note: "Application build agent" },
-  { name: "OpenClaw", note: "Open harness" },
-  { name: "Replit", note: "Hosted agent environment" },
+  { name: "Codex", note: "AI coding workflow" },
+  { name: "Claude Code", note: "AI coding workflow" },
+  { name: "Cursor", note: "AI-assisted editor" },
+  { name: "Lovable", note: "Application build workflow" },
+  { name: "OpenClaw", note: "Agent workflow" },
+  { name: "Replit", note: "Hosted development environment" },
 ] as const;
 
 export const HARNESS_DISCLAIMER =
-  "These are ecosystem targets and compatible workflows. Naming a harness is not a claim of partnership, endorsement, certification or affiliation.";
+  "These names describe ecosystem workflows only. They are not claims of partnership, endorsement, certification or affiliation.";

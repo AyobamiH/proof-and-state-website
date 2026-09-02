@@ -1,40 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ProductDetail } from "@/components/ps/product-detail";
-import { Callout, Section, SectionHeading } from "@/components/ps/primitives";
-import { AuthorityEnvelope, ReceiptSpecimen } from "@/components/ps/specimens";
+import { Callout, Section, SectionHeading, StateChip } from "@/components/ps/primitives";
 import { PRODUCT_BY_KEY } from "@/content/products";
-import { SITE_URL } from "@/content/site";
+import { AGENTPROOF_STATUS, SITE_URL } from "@/content/site";
 import { breadcrumbLd, buildHead, jsonLd } from "@/lib/seo";
 
 const product = PRODUCT_BY_KEY.agentproof;
 const PATH = "/products/agentproof";
-const TITLE = "AgentProof — authorised transactions and signed receipts";
-
-const DUTIES = [
-  {
-    role: "Proposer",
-    detail:
-      "Prepares the action and the exact state it would apply to. Holds no authority to execute.",
-  },
-  {
-    role: "Authority",
-    detail:
-      "Grants a scoped, expiring envelope bound to that prepared state. Does not perform work.",
-  },
-  {
-    role: "Executor",
-    detail: "Applies the action exactly once, with idempotent recovery after interruption.",
-  },
-  {
-    role: "Signer",
-    detail: "Signs the receipt over the action, prepared state and authority reference.",
-  },
-  {
-    role: "Verifier",
-    detail: "Checks the receipt independently, without trusting the executor's account of events.",
-  },
-];
+const TITLE = "AgentProof | In development";
 
 export const Route = createFileRoute("/products/agentproof")({
   head: () => ({
@@ -63,54 +37,31 @@ function AgentProofPage() {
   return (
     <ProductDetail
       product={product}
-      specimen={<ReceiptSpecimen />}
-      specimenNote="Illustrative receipt fields. The digest covers the action, the exact prepared state and the authority it was executed under."
-    >
-      <Section id="duties">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="duties"
-              eyebrow="Separation of duties"
-              title="Five roles that must not collapse into one."
-              lead="A receipt is only meaningful if the party that proposed the action is not the party that authorised, executed, signed and verified it."
-            />
-            <Callout tone="info" title="Exactly once, or not at all" className="mt-8">
-              Execution is bound to an idempotency key over the prepared state. An interrupted
-              transaction resumes to a known outcome instead of repeating a consequential side
-              effect.
-            </Callout>
+      specimen={
+        <div className="rounded-[10px] border border-hairline bg-card p-5">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-eyebrow">Current status</p>
+            <StateChip tone="info">In development</StateChip>
           </div>
-          <ol className="space-y-px overflow-hidden rounded-[10px] border border-hairline bg-hairline">
-            {DUTIES.map((duty, index) => (
-              <li key={duty.role} className="flex gap-4 bg-card px-5 py-4">
-                <span className="font-mono text-[0.6875rem] text-muted-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <p className="font-display text-[0.9375rem] font-medium text-foreground">
-                    {duty.role}
-                  </p>
-                  <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">
-                    {duty.detail}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <p className="mt-4 text-[0.875rem] leading-relaxed text-muted-foreground">
+            {AGENTPROOF_STATUS}
+          </p>
         </div>
-      </Section>
-
-      <Section id="authority">
+      }
+      specimenNote="This page separates design goals from shipped behaviour."
+    >
+      <Section id="status">
         <SectionHeading
-          id="authority"
-          eyebrow="Authority"
-          title="Approval is bound to exact prepared state."
-          lead="An envelope that approves a category of action approves whatever is later placed in that category. AgentProof binds approval to the specific state it was granted against."
+          id="status"
+          eyebrow="Current status"
+          title="A defined direction, not a released product"
+          lead="AgentProof has a defined contract and purpose. Downstream release work remains, so the site does not present its design goals as production guarantees."
         />
-        <div className="mt-10 max-w-2xl">
-          <AuthorityEnvelope />
-        </div>
+        <Callout tone="unproven" title="In development" className="mt-8 max-w-3xl">
+          No general-availability, marketplace or production-runtime claim is being made for
+          AgentProof today. When that changes, the status page and release record should change with
+          it.
+        </Callout>
       </Section>
     </ProductDetail>
   );

@@ -1,51 +1,49 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { CtaBand, PageHeader, RelatedLinks } from "@/components/ps/page-chrome";
 import { Callout, KeyValueRows, Section, SectionHeading } from "@/components/ps/primitives";
-import { DONESTATE_REVIEW_STATUS, GITHUB_URL, SERVICE_URLS } from "@/content/site";
 import { PRODUCTS } from "@/content/products";
+import {
+  AGENTPROOF_STATUS,
+  DONESTATE_REVIEW_STATUS,
+  GITHUB_URL,
+  OPSTRUTH_MARKETPLACE_URL,
+  OPSTRUTH_STATUS,
+  SERVICE_URLS,
+  SITE_URL,
+} from "@/content/site";
 import { breadcrumbLd, buildHead } from "@/lib/seo";
 
-const TITLE = "Status — what is actually known";
+const TITLE = "Status | Current Proof & State product reality";
 const DESCRIPTION =
-  "Honest status for Proof & State: this page explains system and release status rather than reporting live uptime, because no monitored hosted service is operated on your behalf.";
+  "Current public status for Proof & State, DoneState, OpsTruth and AgentProof. This is a product and distribution status page, not an uptime dashboard.";
 
 const FACTS = [
   {
-    key: "DoneState live service",
-    value: `${SERVICE_URLS.donestate} with an MCP endpoint at ${SERVICE_URLS.donestateMcp}. No availability figures are published for it.`,
+    key: "Proof & State website",
+    value: `${SITE_URL} is the live public website. This page does not claim an uptime percentage or service-level commitment.`,
+  },
+  {
+    key: "DoneState",
+    value: `${SERVICE_URLS.donestate} and ${SERVICE_URLS.donestateMcp} are the owned public service addresses. ${DONESTATE_REVIEW_STATUS}`,
   },
   {
     key: "OpsTruth",
-    value: `${SERVICE_URLS.opstruth} with an MCP endpoint at ${SERVICE_URLS.opstruthMcp}. The verifier itself runs in your environment via npx opstruth.`,
+    value: `${SERVICE_URLS.opstruth} and ${SERVICE_URLS.opstruthMcp} are live public addresses. ${OPSTRUTH_STATUS} Marketplace: ${OPSTRUTH_MARKETPLACE_URL}`,
   },
   {
-    key: "DoneState 0.2.0",
-    value: `${DONESTATE_REVIEW_STATUS} Review status is not an approval, a listing or an availability commitment.`,
+    key: "AgentProof",
+    value: AGENTPROOF_STATUS,
   },
   {
-    key: "Maintenance canary",
+    key: "Public release record",
     value:
-      "The current PR-only maintenance canary is AWAITING_VERIFICATION. The independent result is uncertain, so it is not reported as verified.",
+      "OpsTruth GitHub Action v1.0.0 was published on 30 August 2026, with a stable v1 reference for compatible v1 updates.",
   },
   {
-    key: "Managed operation",
+    key: "Availability reporting",
     value:
-      "None. The tooling runs in your environment, against your repositories, under your credentials.",
-  },
-  {
-    key: "Uptime reporting",
-    value:
-      "Not applicable. There is no monitored service endpoint to report availability for, so no figures are published.",
-  },
-  {
-    key: "Release status",
-    value:
-      "No releases have been recorded on the changelog. The repositories are the authoritative record of current state.",
-  },
-  {
-    key: "This website",
-    value: "A static site. If you can read this page, it is serving.",
+      "No uptime percentage or SLA is published here because this page is not backed by a public monitoring feed.",
   },
 ];
 
@@ -62,28 +60,28 @@ function StatusPage() {
     <>
       <PageHeader
         eyebrow="Status"
-        title="What is actually known"
-        lead="A status page that invents green ticks is exactly the failure mode this project exists to argue against. Here is what can honestly be said."
+        title="Current product reality"
+        lead="This page separates live services, public marketplace availability, external review and in-development work."
         crumbs={[{ label: "Status", to: "/status" }]}
-        badge={{ tone: "unproven", label: "no live telemetry" }}
+        badge={{ tone: "verified", label: "source checked" }}
       />
 
       <Section id="facts">
-        <Callout tone="unproven" title="This is not a live uptime dashboard" className="max-w-3xl">
-          No metrics on this page are collected from monitoring. Nothing here should be read as an
-          availability commitment or a service-level statement.
+        <Callout tone="info" title="Product status, not uptime telemetry" className="max-w-3xl">
+          The entries below describe public product and distribution state. They should not be read
+          as availability guarantees.
         </Callout>
-        <div className="mt-10 max-w-3xl">
+        <div className="mt-10 max-w-4xl">
           <KeyValueRows rows={FACTS} />
         </div>
       </Section>
 
-      <Section id="layers">
+      <Section id="repositories">
         <SectionHeading
-          id="layers"
-          eyebrow="Layers"
-          title="Where to check each layer"
-          lead="Commits, issues and tags in each repository describe real state better than any summary here could."
+          id="repositories"
+          eyebrow="Source"
+          title="Check each product at its repository"
+          lead="Repository releases and current source remain the best place to verify implementation details."
         />
         <ul className="mt-10 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline lg:grid-cols-3">
           {PRODUCTS.map((product) => (
@@ -92,41 +90,36 @@ function StatusPage() {
               <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
                 {product.role}
               </p>
+              <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground">
+                {product.stateBadge}
+              </p>
               <a
                 href={product.repo}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="mt-4 inline-block font-mono text-[0.75rem] text-info underline underline-offset-4"
+                className="mt-3 inline-block font-mono text-[0.75rem] text-info underline underline-offset-4"
               >
-                {product.repo.replace("https://", "")}
+                View repository
               </a>
             </li>
           ))}
         </ul>
-        <p className="mt-8 max-w-2xl text-[0.875rem] leading-relaxed text-muted-foreground">
-          If a hosted component is ever operated, this page will carry real monitoring data and say
-          where it comes from. Until then see the{" "}
-          <Link to="/changelog" className="text-info underline underline-offset-4">
-            changelog
-          </Link>
-          .
-        </p>
       </Section>
 
       <RelatedLinks
         links={[
-          { label: "Changelog", to: "/changelog", note: "Release record." },
+          { label: "Changelog", to: "/changelog", note: "Verified public release entries." },
           { label: "Open source", to: "/open-source", note: "Repositories and distribution." },
-          { label: "Security", to: "/security", note: "Posture and disclosure." },
+          { label: "Security", to: "/security", note: "Security posture and disclosure." },
           { label: "Contact", to: "/contact", note: "Ask about current state." },
         ]}
       />
 
       <CtaBand
-        title="Give agents authority. Keep the proof."
-        body="An honest unknown is more useful than a confident green tick."
-        primary={{ label: "Read the principles", to: "/principles" }}
-        secondary={{ label: "View on GitHub", href: GITHUB_URL }}
+        title="Move faster. Keep the evidence."
+        body="If the status changes, this page should change with it."
+        primary={{ label: "View the changelog", to: "/changelog" }}
+        secondary={{ label: "View source", href: GITHUB_URL }}
       />
     </>
   );

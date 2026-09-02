@@ -2,14 +2,39 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { CtaBand, PageHeader, RelatedLinks } from "@/components/ps/page-chrome";
 import { Callout, DefinitionBlock, Section, SectionHeading } from "@/components/ps/primitives";
-import { SystemDiagram } from "@/components/ps/system-diagram";
-import { PRINCIPLES, TRUST_COMMITMENTS } from "@/content/principles";
 import { GITHUB_URL, SYSTEM_DEFINITION } from "@/content/site";
 import { breadcrumbLd, buildHead } from "@/lib/seo";
 
-const TITLE = "Trust — accountability enforced by architecture";
+const TITLE = "Trust | Public commitments and limits";
 const DESCRIPTION =
-  "Proof & State earns trust through structure rather than assurance: least authority, explicit consequence envelopes, exact-commit evidence, separation of duties, deterministic recovery and no self-verification.";
+  "How Proof & State earns trust publicly: reviewable changes, independent evidence checks, clear product maturity, inspectable source and explicit limits.";
+
+const COMMITMENTS = [
+  {
+    title: "Review stays visible",
+    body: "AI-assisted repository maintenance should return to a normal review point instead of making the final decision disappear inside automation.",
+  },
+  {
+    title: "Independent inspection",
+    body: "OpsTruth is designed to inspect software evidence without repairing, deploying or publishing the system it checks.",
+  },
+  {
+    title: "Product maturity is explicit",
+    body: "Available, live, under external review and in development are described as different states.",
+  },
+  {
+    title: "Claims point to evidence",
+    body: "Where a public release or repository can support a claim, the site links back to it instead of asking visitors to trust a summary.",
+  },
+  {
+    title: "Limits are part of the product story",
+    body: "What a product does not do is stated alongside what it offers, especially where human review remains necessary.",
+  },
+  {
+    title: "No borrowed credibility",
+    body: "The site does not invent customers, partnerships, certifications, audits, adoption numbers or availability guarantees.",
+  },
+] as const;
 
 export const Route = createFileRoute("/trust")({
   head: () => ({
@@ -24,25 +49,20 @@ function TrustPage() {
     <>
       <PageHeader
         eyebrow="Trust"
-        title="Trust by architecture, not by assurance."
-        lead="We would rather show you a structure that makes a failure mode impossible than write a paragraph promising it will not happen."
+        title="Make the limits as visible as the promise."
+        lead="Proof & State should be understandable without knowing its internal implementation vocabulary. The public contract is what the products do, what they do not do and how mature they actually are."
         crumbs={[{ label: "Trust", to: "/trust" }]}
-        rail={[
-          { label: "Least authority", tone: "info" },
-          { label: "Exact evidence", tone: "verified" },
-          { label: "Separated duties", tone: "exec" },
-        ]}
       />
 
       <Section id="commitments">
         <SectionHeading
           id="commitments"
-          eyebrow="Commitments"
-          title="Six properties the system is built to hold"
-          lead="Each one is enforced by where authority sits, not by policy or intent."
+          eyebrow="Public commitments"
+          title="What visitors should be able to rely on"
+          lead="These commitments are written at the level a product user can evaluate."
         />
         <dl className="mt-12 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
-          {TRUST_COMMITMENTS.map((commitment) => (
+          {COMMITMENTS.map((commitment) => (
             <div key={commitment.title} className="bg-card p-6">
               <dt className="font-display text-[1.0625rem] font-medium text-foreground">
                 {commitment.title}
@@ -55,84 +75,59 @@ function TrustPage() {
         </dl>
       </Section>
 
-      <Section id="boundary">
-        <SectionHeading
-          id="boundary"
-          eyebrow="Boundary"
-          title="The one line the system will not cross"
-          lead="Verification sits outside the execution path. Evidence crosses the boundary; authority never does."
-        />
-        <div className="mt-12">
-          <SystemDiagram />
-        </div>
-        <Callout tone="denied" title="Self-verification is not proof" className="mt-10 max-w-3xl">
-          Completion reported by the component that performed the work tells you about that
-          component&rsquo;s confidence, not about the state of the system.
-        </Callout>
-      </Section>
-
-      <Section id="principles">
-        <SectionHeading
-          id="principles"
-          eyebrow="Principles"
-          title="The positions behind the commitments"
-          lead="Three long-form technical positions. They are arguments, not slogans, and they are meant to be disagreed with in detail."
-        />
-        <ol className="mt-12 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline lg:grid-cols-3">
-          {PRINCIPLES.map((principle) => (
-            <li key={principle.slug} className="bg-card">
-              <Link
-                to="/principles/$slug"
-                params={{ slug: principle.slug }}
-                className="block h-full p-6 transition-colors hover:bg-secondary"
-              >
-                <p className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
-                  {principle.kicker}
-                </p>
-                <p className="mt-3 font-display text-xl font-medium text-foreground">
-                  {principle.title}
-                </p>
-                <p className="mt-3 text-[0.875rem] leading-relaxed text-muted-foreground">
-                  {principle.summary}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section id="honesty">
+      <Section id="status-honesty">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
           <SectionHeading
-            id="honesty"
-            eyebrow="What we do not claim"
-            title="Maturity is not a marketing decision."
+            id="status-honesty"
+            eyebrow="Status honesty"
+            title="External review is not approval. In development is not available."
+            lead="Distribution labels are kept literal so the website cannot create maturity that the product has not earned."
           />
-          <ul className="space-y-4 text-[0.9375rem] leading-relaxed text-muted-foreground">
-            <li>
-              We do not list customers, logos, adoption counts or partnerships. None are claimed
-              because none are being asserted here.
-            </li>
-            <li>
-              We do not claim certifications, audits or compliance attestations. If that changes,
-              the evidence will be published alongside the claim.
-            </li>
-            <li>
-              We do not publish uptime figures or live service metrics. See{" "}
-              <Link to="/status" className="text-info underline underline-offset-4">
-                status
-              </Link>{" "}
-              for what is actually known.
-            </li>
-            <li>
-              We do not list releases that have not been cut. The{" "}
-              <Link to="/changelog" className="text-info underline underline-offset-4">
-                changelog
-              </Link>{" "}
-              stays empty until there is something real in it.
-            </li>
-          </ul>
+          <div>
+            <Callout tone="verified" title="Available now">
+              OpsTruth has a publicly listed GitHub Marketplace Action. Its public release is part
+              of the evidence for that claim.
+            </Callout>
+            <Callout tone="exec" title="Live, with listings under review" className="mt-5">
+              DoneState is live on its owned service domain. Its OpenAI and GitHub Marketplace
+              review states remain external review states, not publication claims.
+            </Callout>
+            <Callout tone="unproven" title="In development" className="mt-5">
+              AgentProof has a defined contract and purpose, but downstream release work remains.
+              Planned behaviour is not presented as shipped behaviour.
+            </Callout>
+          </div>
         </div>
+      </Section>
+
+      <Section id="claims">
+        <SectionHeading
+          id="claims"
+          eyebrow="What we do not claim"
+          title="Credibility does not come from decorative badges."
+        />
+        <ul className="mt-8 max-w-3xl space-y-4 text-[0.9375rem] leading-relaxed text-muted-foreground">
+          <li>
+            No customer, partnership, funding or adoption claim is made unless it is deliberately
+            published and supportable.
+          </li>
+          <li>No certification, audit or compliance attestation is claimed on this site.</li>
+          <li>
+            No uptime percentage or service-level commitment is published without real monitoring
+            evidence behind it.
+          </li>
+          <li>
+            Planned product behaviour is labelled as planned rather than written in the present
+            tense.
+          </li>
+        </ul>
+        <p className="mt-8 text-[0.875rem] text-muted-foreground">
+          See the{" "}
+          <Link to="/status" className="text-info underline underline-offset-4">
+            status page
+          </Link>{" "}
+          for current distribution state.
+        </p>
       </Section>
 
       <Section id="definition">
@@ -141,18 +136,18 @@ function TrustPage() {
 
       <RelatedLinks
         links={[
-          { label: "Security", to: "/security", note: "Posture, boundaries and disclosure." },
-          { label: "Architecture", to: "/architecture", note: "How the boundary is enforced." },
-          { label: "Principles", to: "/principles", note: "The long-form arguments." },
-          { label: "Open source", to: "/open-source", note: "Read the implementation." },
+          { label: "Security", to: "/security", note: "Security posture and disclosure." },
+          { label: "Open source", to: "/open-source", note: "Repositories and public releases." },
+          { label: "Status", to: "/status", note: "Current product and distribution status." },
+          { label: "About", to: "/about", note: "Why the project exists." },
         ]}
       />
 
       <CtaBand
-        title="Give agents authority. Keep the proof."
-        body="Every commitment on this page should be checkable against the source."
-        primary={{ label: "Open source", to: "/open-source" }}
-        secondary={{ label: "View on GitHub", href: GITHUB_URL }}
+        title="Move faster. Keep the evidence."
+        body="Trust starts with saying clearly what is real today."
+        primary={{ label: "View current status", to: "/status" }}
+        secondary={{ label: "View source", href: GITHUB_URL }}
       />
     </>
   );

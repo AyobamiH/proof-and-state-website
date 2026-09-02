@@ -17,8 +17,8 @@ export function SiteFooter() {
               </p>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              AI work accountability: durable authority, independent verification and evidence that
-              survives the agent session.
+              Reviewable AI-assisted software delivery, independent evidence checks and product
+              status stated plainly.
             </p>
             <a
               href={GITHUB_URL}

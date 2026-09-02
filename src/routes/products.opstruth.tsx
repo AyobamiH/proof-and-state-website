@@ -1,30 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ProductDetail } from "@/components/ps/product-detail";
-import { Callout, KeyValueRows, Section, SectionHeading } from "@/components/ps/primitives";
-import { Terminal, VerificationMatrix } from "@/components/ps/specimens";
+import {
+  Callout,
+  KeyValueRows,
+  Section,
+  SectionHeading,
+  StateChip,
+} from "@/components/ps/primitives";
 import { PRODUCT_BY_KEY } from "@/content/products";
-import { SERVICE_URLS, SITE_URL } from "@/content/site";
+import { OPSTRUTH_MARKETPLACE_URL, OPSTRUTH_STATUS, SERVICE_URLS, SITE_URL } from "@/content/site";
 import { breadcrumbLd, buildHead, jsonLd } from "@/lib/seo";
 
 const product = PRODUCT_BY_KEY.opstruth;
 const PATH = "/products/opstruth";
-const TITLE = "OpsTruth — independent read-only verifier";
+const TITLE = "OpsTruth | Independent software evidence checks";
 
 const SURFACES = [
   {
     surface: "Repository",
-    detail: "Tracked files, tree state and the exact commit under inspection.",
+    detail: "Source and repository evidence for the version being reviewed.",
   },
-  { surface: "Stack", detail: "Declared dependencies, lockfiles and runtime versions." },
-  { surface: "Tests", detail: "Presence, execution and recorded outcome of the suite." },
-  { surface: "Build", detail: "Whether the artefact reproduces from the source tree." },
-  { surface: "CI", detail: "Pipeline configuration and recorded run evidence." },
-  { surface: "Secrets", detail: "Credential material exposed in tracked files or config." },
-  { surface: "Config", detail: "Environment expectations against what is actually declared." },
-  { surface: "Routes", detail: "Whether declared routes exist and respond as claimed." },
-  { surface: "Runtime", detail: "Observable behaviour of the running system." },
-  { surface: "Deployment", detail: "Whether a deployed artefact corresponds to the commit." },
+  {
+    surface: "Tests",
+    detail: "Available evidence that project tests were run and what they reported.",
+  },
+  { surface: "Build", detail: "Evidence that the project can be built from the reviewed source." },
+  { surface: "CI", detail: "Available continuous-integration configuration and results." },
+  {
+    surface: "Runtime",
+    detail: "Observable behaviour when a running surface is available to inspect.",
+  },
+  {
+    surface: "Deployment",
+    detail: "Available evidence connecting a deployed surface to the software claim.",
+  },
 ];
 
 export const Route = createFileRoute("/products/opstruth")({
@@ -54,77 +64,59 @@ function OpsTruthPage() {
   return (
     <ProductDetail
       product={product}
-      specimen={<VerificationMatrix />}
-      specimenNote="Illustrative report rows. Every check resolves to Verified, Risky or Unproven — never to a summary judgement."
+      specimen={
+        <div className="rounded-[10px] border border-hairline bg-card p-5">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-eyebrow">Public availability</p>
+            <StateChip tone="verified">Available</StateChip>
+          </div>
+          <p className="mt-4 text-[0.875rem] leading-relaxed text-muted-foreground">
+            {OPSTRUTH_STATUS}
+          </p>
+        </div>
+      }
+      specimenNote="Public distribution status, not an internal checker status."
     >
-      <Section id="surfaces">
+      <Section id="checks">
         <SectionHeading
-          id="surfaces"
-          eyebrow="Evidence surfaces"
-          title="What OpsTruth inspects"
-          lead="Each surface is read at an exact commit or against the observable running system. Nothing is inferred from what the agent said it did."
+          id="checks"
+          eyebrow="Evidence checks"
+          title="What OpsTruth can inspect"
+          lead="OpsTruth reads available software evidence and reports what it can support without repairing or deploying the system being checked."
         />
-        <dl className="mt-10 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-5">
+        <dl className="mt-10 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
           {SURFACES.map((item) => (
             <div key={item.surface} className="bg-card p-5">
-              <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
+              <dt className="font-display text-[0.9375rem] font-medium text-foreground">
                 {item.surface}
               </dt>
-              <dd className="mt-2 text-[0.8125rem] leading-relaxed text-foreground">
+              <dd className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
                 {item.detail}
               </dd>
             </div>
           ))}
         </dl>
+        <Callout tone="verified" title="Inspection without mutation" className="mt-8 max-w-3xl">
+          OpsTruth is designed to inspect and report. It does not deploy, merge, publish or restart
+          the system it is checking.
+        </Callout>
       </Section>
 
-      <Section id="classification">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="classification"
-              eyebrow="Classification"
-              title="Verified, Risky, Unproven — and nothing else."
-              lead="Absence of evidence is reported as absence of evidence. Unproven is a first-class result, not a soft pass."
-            />
-            <Callout tone="verified" title="Read-only by construction" className="mt-8">
-              OpsTruth does not deploy, mutate databases, publish artefacts, restart services or
-              perform any write action. It holds no credentials that would let it change the system
-              it judges, which is precisely why its judgement carries weight.
-            </Callout>
-          </div>
-          <Terminal
-            label="opstruth report"
-            lines={[
-              { kind: "cmd", text: "npx opstruth" },
-              { kind: "out", text: "commit 9f2c41a · read-only inspection" },
-              { kind: "out", text: "VERIFIED  build reproduces at commit" },
-              { kind: "out", text: "VERIFIED  test suite executed" },
-              { kind: "out", text: "RISKY     declared route returns error status" },
-              { kind: "out", text: "UNPROVEN  no deployment evidence available" },
-              {
-                kind: "note",
-                text: "# no writes performed · no credentials required for mutation",
-              },
-            ]}
-          />
-        </div>
-      </Section>
-
-      <Section id="endpoints">
+      <Section id="availability">
         <SectionHeading
-          id="endpoints"
-          eyebrow="Endpoints"
-          title="Where OpsTruth lives"
-          lead="Canonical addresses for the OpsTruth website and its MCP endpoint. Other hostnames you may have seen are historical and are not canonical."
+          id="availability"
+          eyebrow="Availability"
+          title="Publicly listed on GitHub Marketplace"
+          lead="The GitHub Action is public, and the owned website and MCP endpoint are live."
         />
         <div className="mt-10 max-w-3xl">
           <KeyValueRows
             rows={[
               { key: "Website", value: SERVICE_URLS.opstruth },
               { key: "MCP endpoint", value: SERVICE_URLS.opstruthMcp },
+              { key: "GitHub Marketplace", value: OPSTRUTH_MARKETPLACE_URL },
               { key: "Source", value: product.repo },
-              { key: "Command", value: "npx opstruth" },
+              { key: "Action release", value: "v1.0.0 with stable v1 reference" },
             ]}
           />
         </div>
