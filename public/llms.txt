@@ -1,57 +1,40 @@
 # Proof & State
 
-> Proof & State is AI work accountability infrastructure: DoneState executes under declared authority, AgentProof authorises consequential actions and signs receipts, and OpsTruth verifies the result read-only from outside the execution path.
+> Proof & State builds tools that help teams use AI in software delivery with clearer boundaries, reviewable changes and evidence that can be checked independently.
 
-Proof & State is the umbrella system. It is composed of three independent layers that deliberately hold different authority. The central position is that self-verification is not proof: a run closes on independent attestation, not on an agent's own report.
+Proof & State is an independent engineering project. The public website describes product outcomes and current availability without exposing implementation-only workflow labels.
 
-## Entities
+## Products
 
-- **Proof & State** — the umbrella accountability system comprising DoneState, AgentProof and OpsTruth. Site: https://proofandstate.com. Governance repository: https://github.com/AyobamiH/proof-and-state
-- **DoneState** — the durable execution and control plane for autonomous coding work. Accepts an outcome plus an authority envelope; enforces admission, budgets, leases and idempotency; records durable state transitions and audit evidence; recovers deterministically from crashes; is harness-agnostic; cannot verify its own work and halts awaiting independent attestation. Live service: https://donestate.proofandstate.com (MCP: https://donestate.proofandstate.com/mcp). Source: https://github.com/AyobamiH/donestate
-- **OpsTruth** — the independent, read-only verifier. Inspects repository, stack, tests, build, CI, secrets, config, routes, runtime and deployment evidence, and separates results into Verified, Risky and Unproven. It does not deploy, mutate databases, publish, restart services or perform any write action. Website: https://opstruth.io (MCP: https://mcp.opstruth.io/mcp). Source: https://github.com/AyobamiH/opstruth
-- **AgentProof** — the transaction and signed-receipt layer for consequential actions. Binds authority to exact prepared state, executes exactly once with recovery, emits independently verifiable signed receipts, and separates proposer, authority, executor, signer and verifier. Source: https://github.com/AyobamiH/agentproof
+- **DoneState**: reviewable repository maintenance. It helps prepare selected maintenance work as branches and pull requests while repository owners keep the final merge decision. Live service: https://donestate.proofandstate.com. MCP: https://donestate.proofandstate.com/mcp. Source: https://github.com/AyobamiH/donestate
+- **OpsTruth**: independent software evidence checks. It inspects repository and delivery evidence without changing the system it checks. Website: https://opstruth.io. MCP: https://mcp.opstruth.io/mcp. GitHub Marketplace: https://github.com/marketplace/actions/opstruth-evidence. Source: https://github.com/AyobamiH/opstruth
+- **AgentProof**: in development. Its current purpose is to create checkable evidence around consequential AI-assisted actions. Its contract is defined, but downstream release work remains. Source: https://github.com/AyobamiH/agentproof
 
-## Relationships
+## Current status
 
-- DoneState executes; it cannot verify itself and cannot close its own run.
-- OpsTruth verifies; it holds no write authority over anything it inspects.
-- AgentProof authorises and signs; it does not judge whether the overall outcome is correct.
-- Verification by OpsTruth is what moves a DoneState run from AWAITING_VERIFICATION to VERIFIED.
+- Proof & State website is live at https://proofandstate.com.
+- DoneState is live on its owned service domain. DoneState 0.2.0 remains in OpenAI review, and its GitHub Marketplace listing is also under external review. Neither review state is approval or public listing there.
+- OpsTruth is publicly available as the opstruth-evidence GitHub Marketplace Action. Version v1.0.0 and the stable v1 reference were published on 30 August 2026.
+- AgentProof is in development and is not presented as a released product.
+- No uptime percentage or service-level commitment is published on the website.
 
-## Pages
+## Public pages
 
-- [Home](https://proofandstate.com/): the thesis, the proof pipeline and the three layers.
-- [Products](https://proofandstate.com/products): how the three layers relate, with a permissions comparison.
-- [DoneState](https://proofandstate.com/donestate): durable execution and control plane.
-- [OpsTruth](https://proofandstate.com/products/opstruth): independent read-only verifier.
-- [AgentProof](https://proofandstate.com/products/agentproof): authorised transactions and signed receipts.
-- [Architecture](https://proofandstate.com/architecture): system topology and the independence boundary.
-- [State model](https://proofandstate.com/architecture/state-model): run states, leases, idempotency, recovery.
-- [Authority model](https://proofandstate.com/architecture/authority-model): envelopes, denials, separation of duties.
-- [Trust](https://proofandstate.com/trust): commitments enforced by architecture.
-- [Security](https://proofandstate.com/security): posture and vulnerability disclosure.
-- [Principles](https://proofandstate.com/principles): independent verification, least authority, evidence over claims.
-- [Glossary](https://proofandstate.com/glossary): precise definitions of every term.
-- [Developers](https://proofandstate.com/developers): commands, repositories and entry points.
-- [Quickstart](https://proofandstate.com/developers/quickstart): first independently verified run.
-- [Integrations](https://proofandstate.com/developers/integrations): harness-agnostic integration surfaces.
-- [Documentation](https://proofandstate.com/docs): reference index.
-- [Open source](https://proofandstate.com/open-source): repositories and distribution.
-- [Changelog](https://proofandstate.com/changelog): release record (currently empty by policy).
-- [Status](https://proofandstate.com/status): honest system status; no live uptime telemetry.
-- [About](https://proofandstate.com/about): why the project exists.
-- [Contact](https://proofandstate.com/contact): how to reach the project.
+- https://proofandstate.com/ - product overview and current reality
+- https://proofandstate.com/products - product family and availability
+- https://proofandstate.com/donestate - DoneState
+- https://proofandstate.com/products/opstruth - OpsTruth
+- https://proofandstate.com/products/agentproof - AgentProof development status
+- https://proofandstate.com/trust - public commitments and limits
+- https://proofandstate.com/security - security posture and disclosure
+- https://proofandstate.com/open-source - repositories and distribution
+- https://proofandstate.com/status - current product and distribution status
+- https://proofandstate.com/changelog - verified public release entries
+- https://proofandstate.com/about - why the project exists
+- https://proofandstate.com/contact - contact channels
 
-## Accuracy notes for retrieval
+## Accuracy notes
 
-- Proof & State claims no customers, partnerships, funding, certifications, audits or compliance attestations.
-- Named coding harnesses (Codex, Claude Code, Cursor, Lovable, OpenClaw, Replit) are ecosystem compatibility targets, not partners or endorsers.
-- No releases have been recorded on the changelog, and no uptime figures are published.
-- Receipt, envelope and report values shown on the site are illustrative specimens, not records of real runs.
-
-## Status of record
-
-- DoneState 0.2.0 is in OpenAI Review. It is not approved and not published to any directory.
-- The current PR-only maintenance canary is AWAITING_VERIFICATION, not VERIFIED, because the independent result is uncertain.
-- No customer counts, partnerships, certifications or releases are claimed.
-- Canonical hostnames are listed above; any workers.dev address is historical and not canonical.
+- The site does not claim customers, partnerships, funding, certifications, audits, compliance attestations, adoption numbers or uptime guarantees unless evidence is deliberately published.
+- Product maturity is literal: live service, public marketplace availability, external review and in development are not treated as interchangeable.
+- Historical review transports, internal runtime state names, application identifiers, installation identifiers, sample hashes and implementation-only workflow labels are intentionally omitted from this public retrieval file.

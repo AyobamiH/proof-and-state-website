@@ -2,14 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
 import { Reveal, StateChip } from "@/components/ps/primitives";
-import { ReceiptSpecimen, StateTimeline, VerificationMatrix } from "@/components/ps/specimens";
 import { PRODUCTS, type ProductKey } from "@/content/products";
-
-const SPECIMEN: Record<ProductKey, React.ReactNode> = {
-  donestate: <StateTimeline />,
-  opstruth: <VerificationMatrix />,
-  agentproof: <ReceiptSpecimen />,
-};
 
 const TONE: Record<ProductKey, "exec" | "verified" | "info"> = {
   donestate: "exec",
@@ -30,7 +23,7 @@ export function ProductModules() {
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
-                Layer {String(index + 1).padStart(2, "0")} — {product.layer}
+                Product {String(index + 1).padStart(2, "0")} · {product.layer}
               </span>
               <StateChip tone={TONE[product.key]}>{product.stateBadge}</StateChip>
             </div>
@@ -41,14 +34,6 @@ export function ProductModules() {
             <p className="mt-5 max-w-lg text-pretty leading-relaxed text-muted-foreground">
               {product.summary}
             </p>
-            <ul className="mt-6 space-y-2">
-              {product.capabilities.slice(0, 4).map((capability) => (
-                <li key={capability.title} className="flex gap-3 text-sm text-foreground">
-                  <span aria-hidden="true" className="mt-2 h-px w-4 shrink-0 bg-hairline-strong" />
-                  {capability.title}
-                </li>
-              ))}
-            </ul>
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <Link
                 to={product.path}
@@ -68,7 +53,17 @@ export function ProductModules() {
             </div>
           </div>
 
-          <div className="lg:pt-1">{SPECIMEN[product.key]}</div>
+          <div className="rounded-[10px] border border-hairline bg-secondary/40 p-5 sm:p-6">
+            <p className="text-eyebrow">What it is for</p>
+            <ul className="mt-5 space-y-4">
+              {product.capabilities.slice(0, 4).map((capability) => (
+                <li key={capability.title}>
+                  <p className="font-display text-[0.9375rem] font-medium text-foreground">{capability.title}</p>
+                  <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">{capability.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Reveal>
       ))}
     </div>

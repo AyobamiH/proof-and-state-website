@@ -15,7 +15,6 @@ export type Product = {
   layer: string;
   path: "/donestate" | "/products/opstruth" | "/products/agentproof";
   repo: string;
-  /** One canonical sentence, quoted verbatim in schema, llms.txt and page copy. */
   definition: string;
   tagline: string;
   summary: string;
@@ -30,163 +29,134 @@ export const PRODUCTS: Product[] = [
   {
     key: "donestate",
     name: "DoneState",
-    role: "Durable execution and control plane",
-    layer: "Execution",
+    role: "Reviewable repository maintenance",
+    layer: "Repository maintenance",
     path: "/donestate",
     repo: REPO_URLS.donestate,
     definition:
-      "DoneState is the durable execution and control plane for autonomous coding work: it accepts an outcome plus an authority envelope, enforces admission, budgets, leases and idempotency, records durable state transitions and audit evidence, recovers deterministically from crashes, and cannot verify its own work.",
-    tagline: "Give the agent room to work without giving up control.",
+      "DoneState helps maintain selected GitHub repositories by turning bounded maintenance goals into reviewable branches and pull requests, while repository owners keep final merge authority.",
+    tagline: "Automated maintenance that stays reviewable.",
     summary:
-      "A run begins with a prose outcome and an explicit authority envelope. DoneState decides whether that run is admissible, holds the lease while it executes, records every transition durably, and stops at AWAITING_VERIFICATION until an independent attestation arrives.",
+      "DoneState is for teams that want AI-assisted maintenance without making repository review optional. It prepares work, runs checks and hands changes back through normal GitHub review.",
     capabilities: [
       {
-        title: "Admission control",
-        detail:
-          "A run is admitted only if the requested outcome fits inside the declared authority envelope. Out-of-envelope work is refused up front, not negotiated mid-run.",
+        title: "Scoped repository work",
+        detail: "Maintenance is limited to the repository access and goal chosen for the job.",
       },
       {
-        title: "Budgets and leases",
-        detail:
-          "Each run holds a lease with an expiry and a budget ceiling. A lost lease stops execution rather than allowing two workers to act on the same state.",
+        title: "Pull-request workflow",
+        detail: "Remote changes are prepared on a branch and surfaced for normal review.",
       },
       {
-        title: "Idempotency",
-        detail:
-          "Operations carry idempotency keys so a retried or replayed step converges on the same result instead of duplicating side effects.",
+        title: "Checks before handoff",
+        detail: "Project checks can run before proposed changes are handed back to a reviewer.",
       },
       {
-        title: "Durable state transitions",
-        detail:
-          "Every transition is written before the effect it describes, so the recorded state is never ahead of reality.",
+        title: "Recoverable work",
+        detail: "Interrupted maintenance work is designed to resume from recorded progress instead of starting blindly again.",
       },
       {
-        title: "Crash recovery",
-        detail:
-          "After a crash, a run resumes from its last durable state. Recovery is deterministic: the same recorded history produces the same resumption.",
+        title: "Traceable changes",
+        detail: "Branches, commits and pull requests provide a durable record of what was proposed.",
       },
       {
-        title: "Audit evidence",
-        detail:
-          "The run history is the audit trail — inputs, authority, transitions and outcomes — readable after the agent session is gone.",
-      },
-      {
-        title: "Harness-agnostic",
-        detail:
-          "DoneState governs the run, not the model or the editor. The coding harness is a replaceable component.",
+        title: "Existing GitHub review",
+        detail: "DoneState fits around repository review instead of replacing the owner's final decision.",
       },
     ],
     nonCapabilities: [
-      "Does not verify its own work",
-      "Does not close a run on an agent's self-report",
-      "Does not act outside the declared authority envelope",
+      "Does not merge its own pull requests",
+      "Does not expand repository access by itself",
+      "Does not turn an attempted change into proof that the outcome is correct",
     ],
-    boundary:
-      "DoneState cannot self-verify. A run halts at AWAITING_VERIFICATION and only closes when an independent verifier attests that the state matches the claim.",
-    stateBadge: "AWAITING_VERIFICATION",
+    boundary: "DoneState prepares reviewable changes. Repository owners keep final merge authority.",
+    stateBadge: "Live",
     accent: "exec",
   },
   {
     key: "opstruth",
     name: "OpsTruth",
-    role: "Independent read-only verifier",
-    layer: "Verification",
+    role: "Independent software evidence checks",
+    layer: "Evidence checks",
     path: "/products/opstruth",
     repo: REPO_URLS.opstruth,
     definition:
-      "OpsTruth is an independent read-only verifier for AI-assisted engineering: it inspects repository, stack, test, build, CI, secrets, configuration, route, runtime and deployment evidence, separates findings into Verified, Risky and Unproven, and performs no write actions of any kind.",
-    tagline: "Verification that holds no power to change what it judges.",
+      "OpsTruth inspects repository and software-delivery evidence without changing the system it checks. It is publicly available as the opstruth-evidence GitHub Marketplace Action and through its current public interfaces.",
+    tagline: "Check what changed without changing it again.",
     summary:
-      "OpsTruth reads the system from outside the execution path. It gathers evidence, states plainly what that evidence supports, and refuses to upgrade an absence of evidence into a pass.",
+      "OpsTruth gathers evidence from source, checks and delivery surfaces so teams can see what is supported, what needs attention and what still has not been confirmed.",
     capabilities: [
       {
-        title: "Repository and stack inspection",
-        detail:
-          "Reads the tree at an exact commit: structure, dependencies, framework and build configuration.",
+        title: "Repository inspection",
+        detail: "Checks source and repository evidence at the version being reviewed.",
       },
       {
-        title: "Tests, build and CI evidence",
-        detail:
-          "Collects what actually ran and what it produced, rather than what a summary says it produced.",
+        title: "Build and test evidence",
+        detail: "Surfaces evidence from project checks instead of relying on a prose success summary.",
       },
       {
-        title: "Secrets and configuration checks",
-        detail:
-          "Looks for exposed credentials and configuration that contradicts the deployed shape of the system.",
+        title: "CI evidence",
+        detail: "Reads available continuous-integration results and configuration relevant to a claim.",
       },
       {
-        title: "Routes and runtime evidence",
-        detail: "Checks that declared routes and runtime surfaces respond as the claim implies.",
+        title: "Runtime and deployment evidence",
+        detail: "Can compare public runtime or deployment evidence with the software claim being reviewed.",
       },
       {
-        title: "Deployment evidence",
-        detail: "Compares the deployed artefact against the commit the claim is bound to.",
+        title: "Inspection-only operation",
+        detail: "The checker is designed to observe and report rather than repair, deploy or publish.",
       },
       {
-        title: "Verified / Risky / Unproven",
-        detail:
-          "Three outcomes, not two. Unproven is a first-class result: the check could not be evidenced, and that is reported rather than hidden.",
+        title: "GitHub Marketplace Action",
+        detail: "The opstruth-evidence Action is publicly listed with v1.0.0 and stable v1 references.",
       },
     ],
     nonCapabilities: [
-      "Does not deploy",
-      "Does not mutate databases",
-      "Does not publish",
-      "Does not restart services",
-      "Does not perform any write action",
+      "Does not deploy what it checks",
+      "Does not merge or publish changes",
+      "Does not restart services or rewrite the system under review",
     ],
-    boundary:
-      "OpsTruth holds read-only authority by design. A verifier that can change the system cannot independently judge it.",
-    stateBadge: "READ_ONLY",
+    boundary: "OpsTruth inspects and reports. It does not repair or deploy what it checks.",
+    stateBadge: "Available",
     accent: "verified",
   },
   {
     key: "agentproof",
     name: "AgentProof",
-    role: "Authorised transaction and signed-receipt layer",
-    layer: "Authorisation",
+    role: "Planned signed evidence for consequential actions",
+    layer: "In development",
     path: "/products/agentproof",
     repo: REPO_URLS.agentproof,
     definition:
-      "AgentProof is the transaction and signed-receipt layer for consequential agent actions: it binds authority to an exact prepared state, executes exactly once with recovery, and emits an independently verifiable signed receipt, keeping proposer, authority, executor, signer and verifier separate.",
-    tagline: "Consequential actions leave evidence that outlives the session.",
+      "AgentProof is a Proof & State component in development for creating independently checkable evidence around consequential AI-assisted actions. Its contract is defined, but downstream release work remains.",
+    tagline: "A future record for high-consequence actions.",
     summary:
-      "Before a consequential action runs, AgentProof pins the exact prepared state and the authority that permits it. Execution is exactly-once and recoverable. What comes out is a receipt anyone holding the public key can check.",
+      "AgentProof is not presented as a released product. The current design work focuses on recording what important action was approved, what happened and what evidence should remain afterwards.",
     capabilities: [
       {
-        title: "Exact prepared state",
-        detail:
-          "Authority is granted against a specific prepared state, not a description of it. If the state drifts, the authority no longer applies.",
+        title: "Design goal: action records",
+        detail: "Create a durable record for important AI-assisted actions rather than relying on session history alone.",
       },
       {
-        title: "Exactly-once execution",
-        detail:
-          "A transaction commits once. Retries after a partial failure resolve, they do not repeat the effect.",
+        title: "Design goal: approval context",
+        detail: "Connect the eventual record to the action that was actually reviewed before it happened.",
       },
       {
-        title: "Recovery",
-        detail:
-          "An interrupted transaction resolves to a known terminal outcome rather than an ambiguous one.",
+        title: "Design goal: independent checking",
+        detail: "Make the resulting evidence checkable later without trusting the original session summary.",
       },
       {
-        title: "Independently verifiable receipts",
-        detail:
-          "A receipt binds action, prepared state digest, authority and signer. Verification needs the receipt and the public key — not access to the system that produced it.",
-      },
-      {
-        title: "Separation of duties",
-        detail:
-          "Proposer, authority, executor, signer and verifier are distinct roles. No single component both acts and vouches for the action.",
+        title: "Design goal: recovery clarity",
+        detail: "Reduce ambiguity around whether an interrupted consequential action actually completed.",
       },
     ],
     nonCapabilities: [
-      "Does not grant itself authority",
-      "Does not sign for actions it proposed",
-      "Does not execute against drifted state",
+      "Not presented as generally available",
+      "No current production guarantee is claimed on this site",
+      "Planned behaviour is not described as already shipped",
     ],
-    boundary:
-      "Collapsing proposer, authority, executor, signer and verifier into one component collapses the proof. AgentProof keeps them apart.",
-    stateBadge: "RECEIPT_SIGNED",
+    boundary: "Current status: the contract is defined and downstream release work remains.",
+    stateBadge: "In development",
     accent: "info",
   },
 ];
@@ -197,7 +167,6 @@ export const PRODUCT_BY_KEY: Record<ProductKey, Product> = {
   agentproof: PRODUCTS[2]!,
 };
 
-/** Layer comparison used on /products. */
 export const LAYER_MATRIX: {
   dimension: string;
   donestate: string;
@@ -205,103 +174,82 @@ export const LAYER_MATRIX: {
   agentproof: string;
 }[] = [
   {
-    dimension: "Primary role",
-    donestate: "Execute under declared authority",
-    opstruth: "Verify from outside",
-    agentproof: "Authorise and sign",
+    dimension: "Current availability",
+    donestate: "Live service; external listings still in review",
+    opstruth: "Public GitHub Marketplace Action",
+    agentproof: "In development",
   },
   {
-    dimension: "Write authority",
-    donestate: "Scoped to the envelope",
-    opstruth: "None",
-    agentproof: "Exactly-once, per authorised transaction",
+    dimension: "Use it for",
+    donestate: "Preparing reviewable repository maintenance",
+    opstruth: "Checking software evidence independently",
+    agentproof: "Future evidence for consequential actions",
   },
   {
-    dimension: "Closes a run",
-    donestate: "No",
-    opstruth: "Yes, by attestation",
-    agentproof: "No",
+    dimension: "Change authority",
+    donestate: "Prepares branches and pull requests; owner merges",
+    opstruth: "Inspection only",
+    agentproof: "Not yet a released runtime",
   },
   {
-    dimension: "Durable output",
-    donestate: "Run state and audit history",
-    opstruth: "Classified verification report",
-    agentproof: "Signed receipt",
-  },
-  {
-    dimension: "Reads at",
-    donestate: "Live run state",
-    opstruth: "Exact commit and deployed artefact",
-    agentproof: "Exact prepared state",
+    dimension: "Public output",
+    donestate: "Reviewable repository changes",
+    opstruth: "Evidence report",
+    agentproof: "Planned signed evidence",
   },
 ];
 
-/** Specimen data — illustrative shapes of the artefacts each layer produces. */
 export const RUN_TIMELINE: RunState[] = [
-  { state: "ADMITTED", detail: "Outcome accepted inside authority envelope", tone: "info" },
-  { state: "EXECUTING", detail: "Lease held, budget consuming", tone: "exec" },
-  { state: "VALIDATING", detail: "Local checks and build evidence gathered", tone: "exec" },
-  {
-    state: "AWAITING_VERIFICATION",
-    detail: "Halted — independent attestation required",
-    tone: "risk",
-  },
-  { state: "VERIFIED", detail: "Attestation received, state closed", tone: "verified" },
+  { state: "Goal received", detail: "A maintenance goal is accepted for a selected repository", tone: "info" },
+  { state: "Work prepared", detail: "Changes are prepared on a reviewable branch", tone: "exec" },
+  { state: "Checks run", detail: "Relevant project checks are run before handoff", tone: "exec" },
+  { state: "Pull request opened", detail: "The proposed change is handed back for review", tone: "verified" },
+  { state: "Owner review", detail: "The repository owner decides whether to merge", tone: "unproven" },
 ];
 
 export const VERIFICATION_ROWS: {
   check: string;
   surface: string;
-  state: "verified" | "risky" | "unproven";
+  state: "passed" | "attention" | "not-confirmed";
   note: string;
 }[] = [
   {
-    check: "Build reproduces at commit",
-    surface: "build",
-    state: "verified",
-    note: "Artefact matches source tree",
+    check: "Source can be inspected",
+    surface: "Repository",
+    state: "passed",
+    note: "Repository evidence is available for review",
   },
   {
-    check: "Test suite executed",
-    surface: "tests",
-    state: "verified",
-    note: "Exit status recorded in CI evidence",
+    check: "Project checks are recorded",
+    surface: "Checks",
+    state: "passed",
+    note: "Available check results can be inspected",
   },
   {
-    check: "No credentials in tracked files",
-    surface: "secrets",
-    state: "verified",
-    note: "Scan clean at this commit",
+    check: "Runtime behaviour matches the claim",
+    surface: "Runtime",
+    state: "attention",
+    note: "A runtime result may need investigation",
   },
   {
-    check: "Declared routes respond",
-    surface: "runtime",
-    state: "risky",
-    note: "One route returns an error status",
-  },
-  {
-    check: "Deployed artefact matches commit",
-    surface: "deployment",
-    state: "unproven",
-    note: "No deployment evidence available",
+    check: "Deployment evidence is linked",
+    surface: "Deployment",
+    state: "not-confirmed",
+    note: "No deployment evidence was supplied in this example",
   },
 ];
 
 export const RECEIPT_SPECIMEN = {
-  action: "merge_pull_request",
-  preparedState: "sha256:9f2c41ab6e0d7c5183ba0e77c4d21f9a",
-  authority: "envelope/repo-write@exp-2026-08-29T09:00Z",
-  proposer: "agent:coding-harness",
-  executor: "agentproof:executor-01",
-  signer: "key:ed25519:AP-3f8c",
-  verifier: "opstruth:report-2f19",
-  digest: "ap1:7c4e9d2b83a15f60c8e7d419ab35f2c0",
-  outcome: "committed_once",
+  status: "In development",
+  purpose: "Record a consequential AI-assisted action",
+  includes: "What was reviewed, what action occurred and the resulting evidence",
+  verification: "Designed to be independently checkable later",
+  availability: "Contract defined; downstream release work remains",
 } as const;
 
 export const AUTHORITY_ENVELOPE_SPECIMEN = {
-  scope: ["repo:write (branch: feature/*)", "ci:read", "artifact:read"],
-  denied: ["deploy:*", "db:write", "secrets:read", "service:restart"],
-  budget: "40 tool calls / 15 min wall clock",
-  expiry: "Envelope expires with the lease. No implicit renewal.",
+  allowed: ["Selected repository work", "Reviewable branches", "Project checks"],
+  ownerOnly: ["Final merge decision", "Unrequested repository access", "Silent publication"],
+  limits: "Set by the operator for the job",
+  control: "The owner keeps final review and release decisions",
 } as const;
