@@ -66,13 +66,22 @@ export function VerificationMatrix({ className }: { className?: string }) {
         <caption className="sr-only">Illustrative OpsTruth evidence report</caption>
         <thead>
           <tr className="border-b border-hairline">
-            <th scope="col" className="px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
+            <th
+              scope="col"
+              className="px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Check
             </th>
-            <th scope="col" className="hidden px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground sm:table-cell">
+            <th
+              scope="col"
+              className="hidden px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground sm:table-cell"
+            >
               Area
             </th>
-            <th scope="col" className="px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
+            <th
+              scope="col"
+              className="px-4 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Result
             </th>
           </tr>
@@ -124,25 +133,43 @@ export function AuthorityEnvelope({ className }: { className?: string }) {
     <SpecPanel label="Example safeguards" meta="operator controlled" className={className}>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-verified">Allowed</p>
+          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-verified">
+            Allowed
+          </p>
           <ul className="mt-2.5 space-y-1.5">
             {e.allowed.map((item) => (
-              <li key={item} className="font-mono text-[0.75rem] text-foreground">{item}</li>
+              <li key={item} className="font-mono text-[0.75rem] text-foreground">
+                {item}
+              </li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-denied">Kept with owner</p>
+          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-denied">
+            Kept with owner
+          </p>
           <ul className="mt-2.5 space-y-1.5">
             {e.ownerOnly.map((item) => (
-              <li key={item} className="font-mono text-[0.75rem] text-muted-foreground">{item}</li>
+              <li key={item} className="font-mono text-[0.75rem] text-muted-foreground">
+                {item}
+              </li>
             ))}
           </ul>
         </div>
       </div>
       <div className="mt-5 grid gap-2 border-t border-hairline pt-4 sm:grid-cols-2">
-        <p className="text-[0.8125rem] text-muted-foreground"><span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground">Limits </span>{e.limits}</p>
-        <p className="text-[0.8125rem] text-muted-foreground"><span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground">Control </span>{e.control}</p>
+        <p className="text-[0.8125rem] text-muted-foreground">
+          <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground">
+            Limits{" "}
+          </span>
+          {e.limits}
+        </p>
+        <p className="text-[0.8125rem] text-muted-foreground">
+          <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground">
+            Control{" "}
+          </span>
+          {e.control}
+        </p>
       </div>
     </SpecPanel>
   );
@@ -158,9 +185,16 @@ export function Terminal({
   className?: string;
 }) {
   return (
-    <div className={cn("overflow-hidden rounded-[10px] border border-terminal-border bg-terminal", className)}>
+    <div
+      className={cn(
+        "overflow-hidden rounded-[10px] border border-terminal-border bg-terminal",
+        className,
+      )}
+    >
       <div className="flex items-center justify-between border-b border-terminal-border px-4 py-2.5">
-        <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-terminal-muted">{label}</span>
+        <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-terminal-muted">
+          {label}
+        </span>
         <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-verified" />
       </div>
       <pre className="overflow-x-auto px-4 py-4 font-mono text-[0.8125rem] leading-relaxed">
@@ -168,7 +202,10 @@ export function Terminal({
           {lines.map((line, index) => (
             <span key={`${line.text}-${index}`} className="block">
               {line.kind === "cmd" ? (
-                <><span className="text-terminal-muted">$ </span><span className="text-terminal-foreground">{line.text}</span></>
+                <>
+                  <span className="text-terminal-muted">$ </span>
+                  <span className="text-terminal-foreground">{line.text}</span>
+                </>
               ) : (
                 <span className="text-terminal-muted">{line.text}</span>
               )}
@@ -198,18 +235,39 @@ export function ComparisonMatrix({
           <caption className="sr-only">{label}</caption>
           <thead>
             <tr className="border-b border-hairline">
-              <th scope="col" className="px-4 py-3 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">Dimension</th>
+              <th
+                scope="col"
+                className="px-4 py-3 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground"
+              >
+                Dimension
+              </th>
               {columns.map((column) => (
-                <th key={column} scope="col" className="px-4 py-3 font-display text-[0.8125rem] font-medium text-foreground">{column}</th>
+                <th
+                  key={column}
+                  scope="col"
+                  className="px-4 py-3 font-display text-[0.8125rem] font-medium text-foreground"
+                >
+                  {column}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
               <tr key={row.dimension} className="border-b border-hairline last:border-0 align-top">
-                <th scope="row" className="px-4 py-3 text-left font-mono text-[0.75rem] font-normal text-muted-foreground">{row.dimension}</th>
+                <th
+                  scope="row"
+                  className="px-4 py-3 text-left font-mono text-[0.75rem] font-normal text-muted-foreground"
+                >
+                  {row.dimension}
+                </th>
                 {row.values.map((value, index) => (
-                  <td key={`${row.dimension}-${index}`} className="px-4 py-3 text-[0.8125rem] text-foreground">{value}</td>
+                  <td
+                    key={`${row.dimension}-${index}`}
+                    className="px-4 py-3 text-[0.8125rem] text-foreground"
+                  >
+                    {value}
+                  </td>
                 ))}
               </tr>
             ))}

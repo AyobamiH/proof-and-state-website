@@ -25,8 +25,7 @@ export const SERVICE_URLS = {
   opstruthMcp: "https://mcp.opstruth.io/mcp",
 } as const;
 
-export const OPSTRUTH_MARKETPLACE_URL =
-  "https://github.com/marketplace/actions/opstruth-evidence";
+export const OPSTRUTH_MARKETPLACE_URL = "https://github.com/marketplace/actions/opstruth-evidence";
 
 export const DONESTATE_REVIEW_STATUS =
   "DoneState is live on its owned service domain. DoneState 0.2.0 remains in OpenAI review, and its GitHub Marketplace listing is also under external review. Neither review state means approval or public listing there.";
@@ -109,7 +108,8 @@ export const LEGAL_LINKS = [
 export const TRUST_STRIP = [
   {
     label: "Reviewable changes",
-    detail: "Repository maintenance is prepared for review instead of being silently treated as finished.",
+    detail:
+      "Repository maintenance is prepared for review instead of being silently treated as finished.",
     to: "/donestate",
   },
   {

@@ -51,7 +51,9 @@ function ProductsPage() {
           title="Different jobs, different maturity."
           lead="The site does not flatten live, publicly listed and in-development products into one generic availability claim."
         />
-        <div className="mt-12"><ProductModules /></div>
+        <div className="mt-12">
+          <ProductModules />
+        </div>
       </Section>
 
       <Section id="comparison">
@@ -65,7 +67,10 @@ function ProductsPage() {
           <ComparisonMatrix
             label="Product comparison"
             columns={["DoneState", "OpsTruth", "AgentProof"]}
-            rows={LAYER_MATRIX.map((row) => ({ dimension: row.dimension, values: [row.donestate, row.opstruth, row.agentproof] }))}
+            rows={LAYER_MATRIX.map((row) => ({
+              dimension: row.dimension,
+              values: [row.donestate, row.opstruth, row.agentproof],
+            }))}
           />
         </div>
       </Section>
@@ -73,7 +78,11 @@ function ProductsPage() {
       <RelatedLinks
         links={[
           { label: "Trust", to: "/trust", note: "Public commitments and limits." },
-          { label: "Open source", to: "/open-source", note: "Repositories and published releases." },
+          {
+            label: "Open source",
+            to: "/open-source",
+            note: "Repositories and published releases.",
+          },
           { label: "Status", to: "/status", note: "Current distribution status." },
           { label: "About", to: "/about", note: "Why Proof & State exists." },
         ]}

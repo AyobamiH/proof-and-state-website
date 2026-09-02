@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ProductDetail } from "@/components/ps/product-detail";
-import { Callout, KeyValueRows, Section, SectionHeading, StateChip } from "@/components/ps/primitives";
+import {
+  Callout,
+  KeyValueRows,
+  Section,
+  SectionHeading,
+  StateChip,
+} from "@/components/ps/primitives";
 import { PRODUCT_BY_KEY } from "@/content/products";
 import { DONESTATE_REVIEW_STATUS, SERVICE_URLS, SITE_URL } from "@/content/site";
 import { breadcrumbLd, buildHead, jsonLd } from "@/lib/seo";
@@ -22,7 +28,10 @@ export const Route = createFileRoute("/donestate")({
   head: () => ({
     ...buildHead({ title: TITLE, description: product.definition, path: PATH }),
     scripts: [
-      breadcrumbLd([{ name: "Products", path: "/products" }, { name: "DoneState", path: PATH }]),
+      breadcrumbLd([
+        { name: "Products", path: "/products" },
+        { name: "DoneState", path: PATH },
+      ]),
       jsonLd({
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
@@ -44,11 +53,19 @@ function DoneStatePage() {
       product={product}
       specimen={
         <div className="rounded-[10px] border border-hairline bg-card p-5">
-          <div className="flex items-center justify-between gap-4"><p className="text-eyebrow">Public workflow</p><StateChip tone="exec">Live</StateChip></div>
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-eyebrow">Public workflow</p>
+            <StateChip tone="exec">Live</StateChip>
+          </div>
           <ol className="mt-5 space-y-3">
             {WORKFLOW.map((step, index) => (
-              <li key={step} className="flex gap-3 text-[0.8125rem] leading-relaxed text-muted-foreground">
-                <span className="font-mono text-foreground">{String(index + 1).padStart(2, "0")}</span>
+              <li
+                key={step}
+                className="flex gap-3 text-[0.8125rem] leading-relaxed text-muted-foreground"
+              >
+                <span className="font-mono text-foreground">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <span>{step}</span>
               </li>
             ))}
@@ -74,8 +91,13 @@ function DoneStatePage() {
             ]}
           />
         </div>
-        <Callout tone="unproven" title="External review is not publication" className="mt-8 max-w-3xl">
-          DoneState 0.2.0 remains in OpenAI review and the GitHub Marketplace listing is also under review. The site does not describe either review as approval or public listing.
+        <Callout
+          tone="unproven"
+          title="External review is not publication"
+          className="mt-8 max-w-3xl"
+        >
+          DoneState 0.2.0 remains in OpenAI review and the GitHub Marketplace listing is also under
+          review. The site does not describe either review as approval or public listing.
         </Callout>
       </Section>
     </ProductDetail>

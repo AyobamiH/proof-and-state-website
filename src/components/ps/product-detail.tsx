@@ -22,7 +22,9 @@ export function ProductDetail({
   ];
   const others = PRODUCTS.filter((entry) => entry.key !== product.key);
   const capabilityTitle =
-    product.key === "agentproof" ? "What AgentProof is designed to offer" : `What ${product.name} offers`;
+    product.key === "agentproof"
+      ? "What AgentProof is designed to offer"
+      : `What ${product.name} offers`;
 
   return (
     <>
@@ -48,15 +50,21 @@ export function ProductDetail({
       <Section id="definition">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
           <div>
-            <p className="max-w-2xl text-pretty text-lg leading-relaxed text-foreground">{product.definition}</p>
-            <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-muted-foreground">{product.summary}</p>
+            <p className="max-w-2xl text-pretty text-lg leading-relaxed text-foreground">
+              {product.definition}
+            </p>
+            <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
+              {product.summary}
+            </p>
             <Callout tone={product.accent} title="What to expect" className="mt-8 max-w-2xl">
               {product.boundary}
             </Callout>
           </div>
           <div>
             {specimen}
-            <p className="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">{specimenNote}</p>
+            <p className="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">
+              {specimenNote}
+            </p>
           </div>
         </div>
       </Section>
@@ -75,8 +83,12 @@ export function ProductDetail({
         <dl className="mt-12 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
           {product.capabilities.map((capability) => (
             <div key={capability.title} className="bg-card p-5">
-              <dt className="font-display text-[0.9375rem] font-medium text-foreground">{capability.title}</dt>
-              <dd className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">{capability.detail}</dd>
+              <dt className="font-display text-[0.9375rem] font-medium text-foreground">
+                {capability.title}
+              </dt>
+              <dd className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
+                {capability.detail}
+              </dd>
             </div>
           ))}
         </dl>
@@ -93,7 +105,10 @@ export function ProductDetail({
           <ul className="space-y-px overflow-hidden rounded-[10px] border border-hairline bg-hairline">
             {product.nonCapabilities.map((item) => (
               <li key={item} className="flex items-center gap-3 bg-card px-5 py-4">
-                <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-[2px] border border-hairline-strong" />
+                <span
+                  aria-hidden="true"
+                  className="h-3 w-3 shrink-0 rounded-[2px] border border-hairline-strong"
+                />
                 <span className="text-[0.875rem] text-foreground">{item}</span>
               </li>
             ))}
@@ -112,15 +127,25 @@ export function ProductDetail({
         />
         <div className="mt-10 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2">
           {others.map((other) => (
-            <Link key={other.key} to={other.path} className="bg-card p-6 transition-colors hover:bg-secondary">
-              <p className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">{other.stateBadge}</p>
+            <Link
+              key={other.key}
+              to={other.path}
+              className="bg-card p-6 transition-colors hover:bg-secondary"
+            >
+              <p className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                {other.stateBadge}
+              </p>
               <p className="mt-3 font-display text-lg font-medium text-foreground">{other.name}</p>
-              <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">{other.tagline}</p>
+              <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
+                {other.tagline}
+              </p>
             </Link>
           ))}
         </div>
         <p className="mt-8 max-w-2xl text-[0.9375rem] leading-relaxed text-muted-foreground">
-          DoneState prepares reviewable repository maintenance. OpsTruth checks software evidence independently. AgentProof is the future signed-evidence component and remains in development.
+          DoneState prepares reviewable repository maintenance. OpsTruth checks software evidence
+          independently. AgentProof is the future signed-evidence component and remains in
+          development.
         </p>
       </Section>
 

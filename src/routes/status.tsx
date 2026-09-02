@@ -37,11 +37,13 @@ const FACTS = [
   },
   {
     key: "Public release record",
-    value: "OpsTruth GitHub Action v1.0.0 was published on 30 August 2026, with a stable v1 reference for compatible v1 updates.",
+    value:
+      "OpsTruth GitHub Action v1.0.0 was published on 30 August 2026, with a stable v1 reference for compatible v1 updates.",
   },
   {
     key: "Availability reporting",
-    value: "No uptime percentage or SLA is published here because this page is not backed by a public monitoring feed.",
+    value:
+      "No uptime percentage or SLA is published here because this page is not backed by a public monitoring feed.",
   },
 ];
 
@@ -66,9 +68,12 @@ function StatusPage() {
 
       <Section id="facts">
         <Callout tone="info" title="Product status, not uptime telemetry" className="max-w-3xl">
-          The entries below describe public product and distribution state. They should not be read as availability guarantees.
+          The entries below describe public product and distribution state. They should not be read
+          as availability guarantees.
         </Callout>
-        <div className="mt-10 max-w-4xl"><KeyValueRows rows={FACTS} /></div>
+        <div className="mt-10 max-w-4xl">
+          <KeyValueRows rows={FACTS} />
+        </div>
       </Section>
 
       <Section id="repositories">
@@ -82,9 +87,20 @@ function StatusPage() {
           {PRODUCTS.map((product) => (
             <li key={product.key} className="bg-card p-6">
               <p className="font-display text-lg font-medium text-foreground">{product.name}</p>
-              <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">{product.role}</p>
-              <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground">{product.stateBadge}</p>
-              <a href={product.repo} target="_blank" rel="noreferrer noopener" className="mt-3 inline-block font-mono text-[0.75rem] text-info underline underline-offset-4">View repository</a>
+              <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
+                {product.role}
+              </p>
+              <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted-foreground">
+                {product.stateBadge}
+              </p>
+              <a
+                href={product.repo}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-3 inline-block font-mono text-[0.75rem] text-info underline underline-offset-4"
+              >
+                View repository
+              </a>
             </li>
           ))}
         </ul>

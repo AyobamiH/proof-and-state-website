@@ -64,8 +64,12 @@ function TrustPage() {
         <dl className="mt-12 grid gap-px overflow-hidden rounded-[10px] border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
           {COMMITMENTS.map((commitment) => (
             <div key={commitment.title} className="bg-card p-6">
-              <dt className="font-display text-[1.0625rem] font-medium text-foreground">{commitment.title}</dt>
-              <dd className="mt-3 text-[0.875rem] leading-relaxed text-muted-foreground">{commitment.body}</dd>
+              <dt className="font-display text-[1.0625rem] font-medium text-foreground">
+                {commitment.title}
+              </dt>
+              <dd className="mt-3 text-[0.875rem] leading-relaxed text-muted-foreground">
+                {commitment.body}
+              </dd>
             </div>
           ))}
         </dl>
@@ -81,32 +85,54 @@ function TrustPage() {
           />
           <div>
             <Callout tone="verified" title="Available now">
-              OpsTruth has a publicly listed GitHub Marketplace Action. Its public release is part of the evidence for that claim.
+              OpsTruth has a publicly listed GitHub Marketplace Action. Its public release is part
+              of the evidence for that claim.
             </Callout>
             <Callout tone="exec" title="Live, with listings under review" className="mt-5">
-              DoneState is live on its owned service domain. Its OpenAI and GitHub Marketplace review states remain external review states, not publication claims.
+              DoneState is live on its owned service domain. Its OpenAI and GitHub Marketplace
+              review states remain external review states, not publication claims.
             </Callout>
             <Callout tone="unproven" title="In development" className="mt-5">
-              AgentProof has a defined contract and purpose, but downstream release work remains. Planned behaviour is not presented as shipped behaviour.
+              AgentProof has a defined contract and purpose, but downstream release work remains.
+              Planned behaviour is not presented as shipped behaviour.
             </Callout>
           </div>
         </div>
       </Section>
 
       <Section id="claims">
-        <SectionHeading id="claims" eyebrow="What we do not claim" title="Credibility does not come from decorative badges." />
+        <SectionHeading
+          id="claims"
+          eyebrow="What we do not claim"
+          title="Credibility does not come from decorative badges."
+        />
         <ul className="mt-8 max-w-3xl space-y-4 text-[0.9375rem] leading-relaxed text-muted-foreground">
-          <li>No customer, partnership, funding or adoption claim is made unless it is deliberately published and supportable.</li>
+          <li>
+            No customer, partnership, funding or adoption claim is made unless it is deliberately
+            published and supportable.
+          </li>
           <li>No certification, audit or compliance attestation is claimed on this site.</li>
-          <li>No uptime percentage or service-level commitment is published without real monitoring evidence behind it.</li>
-          <li>Planned product behaviour is labelled as planned rather than written in the present tense.</li>
+          <li>
+            No uptime percentage or service-level commitment is published without real monitoring
+            evidence behind it.
+          </li>
+          <li>
+            Planned product behaviour is labelled as planned rather than written in the present
+            tense.
+          </li>
         </ul>
         <p className="mt-8 text-[0.875rem] text-muted-foreground">
-          See the <Link to="/status" className="text-info underline underline-offset-4">status page</Link> for current distribution state.
+          See the{" "}
+          <Link to="/status" className="text-info underline underline-offset-4">
+            status page
+          </Link>{" "}
+          for current distribution state.
         </p>
       </Section>
 
-      <Section id="definition"><DefinitionBlock term="Proof & State" definition={SYSTEM_DEFINITION} /></Section>
+      <Section id="definition">
+        <DefinitionBlock term="Proof & State" definition={SYSTEM_DEFINITION} />
+      </Section>
 
       <RelatedLinks
         links={[

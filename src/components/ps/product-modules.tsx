@@ -58,8 +58,12 @@ export function ProductModules() {
             <ul className="mt-5 space-y-4">
               {product.capabilities.slice(0, 4).map((capability) => (
                 <li key={capability.title}>
-                  <p className="font-display text-[0.9375rem] font-medium text-foreground">{capability.title}</p>
-                  <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">{capability.detail}</p>
+                  <p className="font-display text-[0.9375rem] font-medium text-foreground">
+                    {capability.title}
+                  </p>
+                  <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">
+                    {capability.detail}
+                  </p>
                 </li>
               ))}
             </ul>

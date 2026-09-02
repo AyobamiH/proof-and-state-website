@@ -53,15 +53,18 @@ export const PRODUCTS: Product[] = [
       },
       {
         title: "Recoverable work",
-        detail: "Interrupted maintenance work is designed to resume from recorded progress instead of starting blindly again.",
+        detail:
+          "Interrupted maintenance work is designed to resume from recorded progress instead of starting blindly again.",
       },
       {
         title: "Traceable changes",
-        detail: "Branches, commits and pull requests provide a durable record of what was proposed.",
+        detail:
+          "Branches, commits and pull requests provide a durable record of what was proposed.",
       },
       {
         title: "Existing GitHub review",
-        detail: "DoneState fits around repository review instead of replacing the owner's final decision.",
+        detail:
+          "DoneState fits around repository review instead of replacing the owner's final decision.",
       },
     ],
     nonCapabilities: [
@@ -69,7 +72,8 @@ export const PRODUCTS: Product[] = [
       "Does not expand repository access by itself",
       "Does not turn an attempted change into proof that the outcome is correct",
     ],
-    boundary: "DoneState prepares reviewable changes. Repository owners keep final merge authority.",
+    boundary:
+      "DoneState prepares reviewable changes. Repository owners keep final merge authority.",
     stateBadge: "Live",
     accent: "exec",
   },
@@ -92,23 +96,28 @@ export const PRODUCTS: Product[] = [
       },
       {
         title: "Build and test evidence",
-        detail: "Surfaces evidence from project checks instead of relying on a prose success summary.",
+        detail:
+          "Surfaces evidence from project checks instead of relying on a prose success summary.",
       },
       {
         title: "CI evidence",
-        detail: "Reads available continuous-integration results and configuration relevant to a claim.",
+        detail:
+          "Reads available continuous-integration results and configuration relevant to a claim.",
       },
       {
         title: "Runtime and deployment evidence",
-        detail: "Can compare public runtime or deployment evidence with the software claim being reviewed.",
+        detail:
+          "Can compare public runtime or deployment evidence with the software claim being reviewed.",
       },
       {
         title: "Inspection-only operation",
-        detail: "The checker is designed to observe and report rather than repair, deploy or publish.",
+        detail:
+          "The checker is designed to observe and report rather than repair, deploy or publish.",
       },
       {
         title: "GitHub Marketplace Action",
-        detail: "The opstruth-evidence Action is publicly listed with v1.0.0 and stable v1 references.",
+        detail:
+          "The opstruth-evidence Action is publicly listed with v1.0.0 and stable v1 references.",
       },
     ],
     nonCapabilities: [
@@ -135,19 +144,23 @@ export const PRODUCTS: Product[] = [
     capabilities: [
       {
         title: "Design goal: action records",
-        detail: "Create a durable record for important AI-assisted actions rather than relying on session history alone.",
+        detail:
+          "Create a durable record for important AI-assisted actions rather than relying on session history alone.",
       },
       {
         title: "Design goal: approval context",
-        detail: "Connect the eventual record to the action that was actually reviewed before it happened.",
+        detail:
+          "Connect the eventual record to the action that was actually reviewed before it happened.",
       },
       {
         title: "Design goal: independent checking",
-        detail: "Make the resulting evidence checkable later without trusting the original session summary.",
+        detail:
+          "Make the resulting evidence checkable later without trusting the original session summary.",
       },
       {
         title: "Design goal: recovery clarity",
-        detail: "Reduce ambiguity around whether an interrupted consequential action actually completed.",
+        detail:
+          "Reduce ambiguity around whether an interrupted consequential action actually completed.",
       },
     ],
     nonCapabilities: [
@@ -200,11 +213,23 @@ export const LAYER_MATRIX: {
 ];
 
 export const RUN_TIMELINE: RunState[] = [
-  { state: "Goal received", detail: "A maintenance goal is accepted for a selected repository", tone: "info" },
+  {
+    state: "Goal received",
+    detail: "A maintenance goal is accepted for a selected repository",
+    tone: "info",
+  },
   { state: "Work prepared", detail: "Changes are prepared on a reviewable branch", tone: "exec" },
   { state: "Checks run", detail: "Relevant project checks are run before handoff", tone: "exec" },
-  { state: "Pull request opened", detail: "The proposed change is handed back for review", tone: "verified" },
-  { state: "Owner review", detail: "The repository owner decides whether to merge", tone: "unproven" },
+  {
+    state: "Pull request opened",
+    detail: "The proposed change is handed back for review",
+    tone: "verified",
+  },
+  {
+    state: "Owner review",
+    detail: "The repository owner decides whether to merge",
+    tone: "unproven",
+  },
 ];
 
 export const VERIFICATION_ROWS: {
