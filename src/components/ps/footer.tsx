@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
+import { BrandMark } from "@/components/ps/brand";
 import { Container } from "@/components/ps/primitives";
 import { FOOTER_COLUMNS, GITHUB_URL, LEGAL_LINKS } from "@/content/site";
 
@@ -9,9 +10,12 @@ export function SiteFooter() {
       <Container className="py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.6fr)]">
           <div>
-            <p className="font-display text-lg font-medium tracking-tight">
-              Proof <span className="text-muted-foreground">&amp;</span> State
-            </p>
+            <div className="flex items-center gap-3">
+              <BrandMark className="h-10 w-10" />
+              <p className="font-display text-lg font-medium tracking-tight">
+                Proof <span className="text-muted-foreground">&amp;</span> State
+              </p>
+            </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               AI work accountability: durable authority, independent verification and evidence that
               survives the agent session.

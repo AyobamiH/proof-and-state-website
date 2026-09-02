@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Github, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { BrandMark } from "@/components/ps/brand";
 import { Container } from "@/components/ps/primitives";
 import { ThemeToggle } from "@/components/ps/theme-toggle";
 import { GITHUB_URL, NAV_GROUPS } from "@/content/site";
@@ -10,12 +11,7 @@ import { cn } from "@/lib/utils";
 function Wordmark() {
   return (
     <Link to="/" className="group flex items-center gap-2.5" aria-label="Proof and State — home">
-      <span
-        aria-hidden="true"
-        className="grid h-7 w-7 place-items-center rounded-[5px] border border-hairline-strong bg-card"
-      >
-        <span className="h-2.5 w-2.5 rounded-[1px] border border-foreground/70 bg-foreground/15 transition-colors group-hover:bg-verified/50" />
-      </span>
+      <BrandMark className="h-8 w-8" />
       <span className="font-display text-[0.95rem] font-medium tracking-tight">
         Proof <span className="text-muted-foreground">&amp;</span> State
       </span>
