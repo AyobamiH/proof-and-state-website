@@ -21,6 +21,7 @@ import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as TrustRouteImport } from './routes/trust'
+import { Route as DotwellKnownOpenaiAppsChallengeRouteImport } from './routes/[.]well-known.openai-apps-challenge'
 import { Route as ArchitectureIndexRouteImport } from './routes/architecture.index'
 import { Route as ArchitectureAuthorityModelRouteImport } from './routes/architecture.authority-model'
 import { Route as ArchitectureStateModelRouteImport } from './routes/architecture.state-model'
@@ -96,6 +97,12 @@ const TrustRoute = TrustRouteImport.update({
   path: '/trust',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotwellKnownOpenaiAppsChallengeRoute =
+  DotwellKnownOpenaiAppsChallengeRouteImport.update({
+    id: '/.well-known/openai-apps-challenge',
+    path: '/.well-known/openai-apps-challenge',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ArchitectureIndexRoute = ArchitectureIndexRouteImport.update({
   id: '/architecture/',
   path: '/architecture/',
@@ -181,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/status': typeof StatusRoute
   '/trust': typeof TrustRoute
+  '/.well-known/openai-apps-challenge': typeof DotwellKnownOpenaiAppsChallengeRoute
   '/architecture/authority-model': typeof ArchitectureAuthorityModelRoute
   '/architecture/state-model': typeof ArchitectureStateModelRoute
   '/developers/integrations': typeof DevelopersIntegrationsRoute
@@ -209,6 +217,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/status': typeof StatusRoute
   '/trust': typeof TrustRoute
+  '/.well-known/openai-apps-challenge': typeof DotwellKnownOpenaiAppsChallengeRoute
   '/architecture/authority-model': typeof ArchitectureAuthorityModelRoute
   '/architecture/state-model': typeof ArchitectureStateModelRoute
   '/developers/integrations': typeof DevelopersIntegrationsRoute
@@ -238,6 +247,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/status': typeof StatusRoute
   '/trust': typeof TrustRoute
+  '/.well-known/openai-apps-challenge': typeof DotwellKnownOpenaiAppsChallengeRoute
   '/architecture/authority-model': typeof ArchitectureAuthorityModelRoute
   '/architecture/state-model': typeof ArchitectureStateModelRoute
   '/developers/integrations': typeof DevelopersIntegrationsRoute
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/status'
     | '/trust'
+    | '/.well-known/openai-apps-challenge'
     | '/architecture/authority-model'
     | '/architecture/state-model'
     | '/developers/integrations'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/status'
     | '/trust'
+    | '/.well-known/openai-apps-challenge'
     | '/architecture/authority-model'
     | '/architecture/state-model'
     | '/developers/integrations'
@@ -324,6 +336,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/status'
     | '/trust'
+    | '/.well-known/openai-apps-challenge'
     | '/architecture/authority-model'
     | '/architecture/state-model'
     | '/developers/integrations'
@@ -353,6 +366,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatusRoute: typeof StatusRoute
   TrustRoute: typeof TrustRoute
+  DotwellKnownOpenaiAppsChallengeRoute: typeof DotwellKnownOpenaiAppsChallengeRoute
   ArchitectureAuthorityModelRoute: typeof ArchitectureAuthorityModelRoute
   ArchitectureStateModelRoute: typeof ArchitectureStateModelRoute
   DevelopersIntegrationsRoute: typeof DevelopersIntegrationsRoute
@@ -453,6 +467,13 @@ declare module '@tanstack/react-router' {
       path: '/trust'
       fullPath: '/trust'
       preLoaderRoute: typeof TrustRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/openai-apps-challenge': {
+      id: '/.well-known/openai-apps-challenge'
+      path: '/.well-known/openai-apps-challenge'
+      fullPath: '/.well-known/openai-apps-challenge'
+      preLoaderRoute: typeof DotwellKnownOpenaiAppsChallengeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/architecture/': {
@@ -569,6 +590,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatusRoute: StatusRoute,
   TrustRoute: TrustRoute,
+  DotwellKnownOpenaiAppsChallengeRoute: DotwellKnownOpenaiAppsChallengeRoute,
   ArchitectureAuthorityModelRoute: ArchitectureAuthorityModelRoute,
   ArchitectureStateModelRoute: ArchitectureStateModelRoute,
   DevelopersIntegrationsRoute: DevelopersIntegrationsRoute,
