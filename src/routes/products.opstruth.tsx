@@ -9,7 +9,13 @@ import {
   StateChip,
 } from "@/components/ps/primitives";
 import { PRODUCT_BY_KEY } from "@/content/products";
-import { OPSTRUTH_MARKETPLACE_URL, OPSTRUTH_STATUS, SERVICE_URLS, SITE_URL } from "@/content/site";
+import {
+  OPSTRUTH_MARKETPLACE_URL,
+  OPSTRUTH_OPENAI_URL,
+  OPSTRUTH_STATUS,
+  SERVICE_URLS,
+  SITE_URL,
+} from "@/content/site";
 import { breadcrumbLd, buildHead, jsonLd } from "@/lib/seo";
 
 const product = PRODUCT_BY_KEY.opstruth;
@@ -106,16 +112,18 @@ function OpsTruthPage() {
         <SectionHeading
           id="availability"
           eyebrow="Availability"
-          title="Publicly listed on GitHub Marketplace"
-          lead="The GitHub Action is public, and the owned website and MCP endpoint are live."
+          title="Published on OpenAI and GitHub Marketplace"
+          lead="OpsTruth 0.4.1 is published in the OpenAI Plugins Directory. The GitHub Action is also public."
         />
         <div className="mt-10 max-w-3xl">
           <KeyValueRows
             rows={[
               { key: "Website", value: SERVICE_URLS.opstruth },
               { key: "MCP endpoint", value: SERVICE_URLS.opstruthMcp },
+              { key: "OpenAI Plugins Directory", value: OPSTRUTH_OPENAI_URL },
               { key: "GitHub Marketplace", value: OPSTRUTH_MARKETPLACE_URL },
               { key: "Source", value: product.repo },
+              { key: "OpenAI release", value: "0.4.1" },
               { key: "Action release", value: "v1.0.0 with stable v1 reference" },
             ]}
           />
