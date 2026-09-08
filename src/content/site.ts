@@ -26,12 +26,14 @@ export const SERVICE_URLS = {
 } as const;
 
 export const OPSTRUTH_MARKETPLACE_URL = "https://github.com/marketplace/actions/opstruth-evidence";
+export const OPSTRUTH_OPENAI_URL =
+  "https://chatgpt.com/plugins/plugins_6a8d4dc60bf081918a06094873890eb4";
 
 export const DONESTATE_REVIEW_STATUS =
   "DoneState is live on its owned service domain. DoneState 0.3.0 was submitted to OpenAI on 4 September 2026 and remains in review. Its GitHub Marketplace listing is also under external review. Neither review state means approval or public listing there.";
 
 export const OPSTRUTH_STATUS =
-  "OpsTruth is publicly available as the opstruth-evidence GitHub Marketplace Action, with v1.0.0 and the stable v1 reference published.";
+  "OpsTruth 0.4.1 is published in the OpenAI Plugins Directory. The opstruth-evidence GitHub Marketplace Action is also public, with v1.0.0 and the stable v1 reference published.";
 
 export const AGENTPROOF_STATUS =
   "AgentProof is in development. Its contract is defined, but downstream release work remains and it is not presented as a released product.";
