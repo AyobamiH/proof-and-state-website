@@ -28,7 +28,7 @@ export const SERVICE_URLS = {
 export const OPSTRUTH_MARKETPLACE_URL = "https://github.com/marketplace/actions/opstruth-evidence";
 
 export const DONESTATE_REVIEW_STATUS =
-  "DoneState is live on its owned service domain. DoneState 0.2.0 remains in OpenAI review, and its GitHub Marketplace listing is also under external review. Neither review state means approval or public listing there.";
+  "DoneState is live on its owned service domain. DoneState 0.3.0 was submitted to OpenAI on 4 September 2026 and remains in review. Its GitHub Marketplace listing is also under external review. Neither review state means approval or public listing there.";
 
 export const OPSTRUTH_STATUS =
   "OpsTruth is publicly available as the opstruth-evidence GitHub Marketplace Action, with v1.0.0 and the stable v1 reference published.";

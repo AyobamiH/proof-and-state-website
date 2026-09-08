@@ -96,8 +96,9 @@ function DoneStatePage() {
           title="External review is not publication"
           className="mt-8 max-w-3xl"
         >
-          DoneState 0.2.0 remains in OpenAI review and the GitHub Marketplace listing is also under
-          review. The site does not describe either review as approval or public listing.
+          DoneState 0.3.0 was submitted to OpenAI on 4 September 2026 and remains in review. The
+          GitHub Marketplace listing is also under review. The site does not describe either review
+          as approval or public listing.
         </Callout>
       </Section>
     </ProductDetail>
