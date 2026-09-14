@@ -1,0 +1,43 @@
+name: Owned toolchain integration
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: owned-toolchain-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - name: Install isolated browser test tools
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ps-browser"
+          "$RUNNER_TEMP/ps-browser/bin/pip" install playwright==1.58.0
+          "$RUNNER_TEMP/ps-browser/bin/playwright" install --with-deps chromium
+          echo "$RUNNER_TEMP/ps-browser/bin" >> "$GITHUB_PATH"
+      - name: Exercise import, environment, browser and CSRF boundaries
+        run: bash scripts/check_toolchain_integration.sh
+      - name: Validate development build
+        run: bun run build:dev
+      - name: Rebuild and verify shipping output without fixtures
+        run: |
+          bun run build
+          python3 scripts/verify_toolchain.py --built --report branding-evidence/toolchain.json
+          bash scripts/check_built_branding.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: toolchain-integration-${{ github.run_id }}
+          path: branding-evidence/
+          retention-days: 90
