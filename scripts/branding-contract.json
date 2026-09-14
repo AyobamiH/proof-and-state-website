@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "revision": "proof-state-v1",
+  "origin": "https://proofandstate.com",
+  "routes": [
+    "/",
+    "/status",
+    "/products"
+  ],
+  "head_links": [
+    {
+      "rel": "shortcut icon",
+      "href": "/brand/v1/favicon.ico",
+      "type": "image/x-icon"
+    },
+    {
+      "rel": "icon",
+      "href": "/brand/v1/favicon-32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "rel": "icon",
+      "href": "/brand/v1/icon-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "rel": "icon",
+      "href": "/brand/v1/proof-and-state-mark.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "href": "/brand/v1/apple-touch-icon.png",
+      "sizes": "180x180"
+    },
+    {
+      "rel": "manifest",
+      "href": "/site.webmanifest"
+    }
+  ],
+  "image_meta": {
+    "og:image": "https://proofandstate.com/brand/v1/share.png",
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:type": "image/png",
+    "og:image:alt": "Proof & State: evidence for AI-assisted software delivery",
+    "twitter:image": "https://proofandstate.com/brand/v1/share.png",
+    "twitter:image:alt": "Proof & State: evidence for AI-assisted software delivery",
+    "twitter:card": "summary_large_image"
+  },
+  "assets": [
+    {
+      "path": "/favicon.ico",
+      "git_blob_sha": "804abc66102d6bd869b404df0abfa7a49223f8d1",
+      "format": "ico",
+      "mime": [
+        "image/x-icon",
+        "image/vnd.microsoft.icon"
+      ],
+      "immutable": false,
+      "sizes": [
+        [
+          16,
+          16
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          48,
+          48
+        ],
+        [
+          64,
+          64
+        ]
+      ]
+    },
+    {
+      "path": "/brand/proof-and-state-mark.svg",
+      "git_blob_sha": "f494c6b4805bde2200ae6c28690bf47d59b8e530",
+      "format": "svg",
+      "mime": [
+        "image/svg+xml"
+      ],
+      "immutable": false
+    },
+    {
+      "path": "/brand/proof-and-state-favicon-32.png",
+      "git_blob_sha": "9e335854a179b946194cc6633bbd366d98b406a5",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": false,
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "path": "/brand/proof-and-state-apple-touch-icon.png",
+      "git_blob_sha": "550db9f6311173a44a3690279d0e1104c76ca203",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": false,
+      "size": [
+        180,
+        180
+      ]
+    },
+    {
+      "path": "/brand/v1/favicon.ico",
+      "git_blob_sha": "804abc66102d6bd869b404df0abfa7a49223f8d1",
+      "format": "ico",
+      "mime": [
+        "image/x-icon",
+        "image/vnd.microsoft.icon"
+      ],
+      "immutable": true,
+      "sizes": [
+        [
+          16,
+          16
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          48,
+          48
+        ],
+        [
+          64,
+          64
+        ]
+      ]
+    },
+    {
+      "path": "/brand/v1/proof-and-state-mark.svg",
+      "git_blob_sha": "f494c6b4805bde2200ae6c28690bf47d59b8e530",
+      "format": "svg",
+      "mime": [
+        "image/svg+xml"
+      ],
+      "immutable": true
+    },
+    {
+      "path": "/brand/v1/favicon-32.png",
+      "git_blob_sha": "9e335854a179b946194cc6633bbd366d98b406a5",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "path": "/brand/v1/apple-touch-icon.png",
+      "git_blob_sha": "550db9f6311173a44a3690279d0e1104c76ca203",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        180,
+        180
+      ]
+    },
+    {
+      "path": "/brand/v1/icon-96.png",
+      "git_blob_sha": "21e20f3c274f57aa3f42b7b41663c6777837a132",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        96,
+        96
+      ]
+    },
+    {
+      "path": "/brand/v1/icon-192.png",
+      "git_blob_sha": "5cc149a9662a25af0d57bcc3da27485b7548864f",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        192,
+        192
+      ]
+    },
+    {
+      "path": "/brand/v1/icon-512.png",
+      "git_blob_sha": "05ab8531d307294ee40cdc3efcf2cc871203949b",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "path": "/brand/v1/share.png",
+      "git_blob_sha": "140a6278be8193f4b02d291adaab9c1512314e26",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": true,
+      "size": [
+        1200,
+        630
+      ]
+    },
+    {
+      "path": "/apple-touch-icon.png",
+      "git_blob_sha": "550db9f6311173a44a3690279d0e1104c76ca203",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": false,
+      "size": [
+        180,
+        180
+      ]
+    },
+    {
+      "path": "/apple-touch-icon-precomposed.png",
+      "git_blob_sha": "550db9f6311173a44a3690279d0e1104c76ca203",
+      "format": "png",
+      "mime": [
+        "image/png"
+      ],
+      "immutable": false,
+      "size": [
+        180,
+        180
+      ]
+    },
+    {
+      "path": "/site.webmanifest",
+      "git_blob_sha": "03bb84bcea310413f1f2c9435a06fa3381952e58",
+      "format": "manifest",
+      "mime": [
+        "application/manifest+json"
+      ],
+      "immutable": false
+    }
+  ]
+}
