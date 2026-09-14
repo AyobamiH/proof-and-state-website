@@ -7,9 +7,15 @@ const disposeDiagnostics = installRuntimeDiagnostics();
 if (import.meta.hot) import.meta.hot.dispose(disposeDiagnostics);
 
 startTransition(() => {
-  hydrateRoot(document, <StrictMode><StartClient /></StrictMode>, {
-    onCaughtError: (error) => reportRuntimeError(error, "react-caught"),
-    onUncaughtError: (error) => reportRuntimeError(error, "react-uncaught"),
-    onRecoverableError: (error) => reportRuntimeError(error, "react-recoverable"),
-  });
+  hydrateRoot(
+    document,
+    <StrictMode>
+      <StartClient />
+    </StrictMode>,
+    {
+      onCaughtError: (error) => reportRuntimeError(error, "react-caught"),
+      onUncaughtError: (error) => reportRuntimeError(error, "react-uncaught"),
+      onRecoverableError: (error) => reportRuntimeError(error, "react-recoverable"),
+    },
+  );
 });

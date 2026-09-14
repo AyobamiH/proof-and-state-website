@@ -1,0 +1,59 @@
+{
+  "source_commit": "484be40385f44223a3b748b77cafa13ae80ddd60",
+  "audit_run": 34805597832,
+  "generated_wrangler": {
+    "compatibility_date": "2026-08-30",
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "proof-and-state-website",
+    "main": "index.mjs",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "workers_dev": true,
+    "no_bundle": true,
+    "assets": {
+      "binding": "ASSETS",
+      "directory": "../public"
+    },
+    "rules": [
+      {
+        "type": "ESModule",
+        "globs": [
+          "**/*.mjs",
+          "**/*.js"
+        ]
+      }
+    ],
+    "routes": [
+      {
+        "pattern": "proofandstate.com",
+        "custom_domain": true
+      },
+      {
+        "pattern": "www.proofandstate.com",
+        "custom_domain": true
+      }
+    ],
+    "observability": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    }
+  },
+  "protected_source_sha256": {
+    "src/styles.css": "9e51c5f955338c86034dae5fa4632dfbe5d3d860f2c7607455a3ae63a81da57c",
+    "src/router.tsx": "72b68964d3f55ba4f7dcf2a04aad9d97d7c61fabad13aec1d298f1e39ee59fcc",
+    "src/server.ts": "26296933f539f07bfd5966aaf8991630aa482f089c8f1b4e5f58d37298f77155",
+    "src/start.ts": "d79d142c6c5d057acc7a140197f464ef29a2c55bb422aafe700f82b418894e74",
+    "src/lib/error-capture.ts": "d6fa7756cbc4c399f4e891b174c2dce8160e2354972c2ae68413dfd1db843088",
+    "src/lib/error-page.ts": "635915886f5d44a18b6add2a53959dbe2e8ba1bb3f7e597fc714650e74157bb6",
+    "src/components/ps/nav.tsx": "a6ba40a22183f3e6ad309eb5d43c0fbd1d054a57ce3283f1f9d5614adad750cd",
+    "src/components/ps/footer.tsx": "0aa111ce73c5118903f827c074c383d50f335fa1bf53e503e0b152f063263149",
+    "src/components/ps/brand.tsx": "f72d04276fd28f22aae53f0b9aa7d27a7116fb5d4b110254b517d414f6109c46",
+    "src/components/ps/theme-toggle.tsx": "ae496efda471d975b7b1e0170a46b0ea335e77ac35cf62c97f08cc3747c9237c",
+    "src/content/site.ts": "8b4aa7d50e269ed62ff3bc61cb9943556cf1a8f326f544161795aa2f57f72384",
+    "src/lib/seo.ts": "89de96b8855439c16b75af9ce06409e23c0aec2cb69c39948040fc80a184f783",
+    "scripts/branding-contract.json": "c5831f8d336cf07c9d577e559f8718178e9cb599791c02ad57d9554840f23b79",
+    "public/_headers": "144ee3aeb64d1eaf591ca55916cc9d56552051e4ce85afb332080398a216022b",
+    "wrangler.jsonc": "07108048514fbbc14718e538ff36d4dbb47d5fb3811c502c4f9f5c8f530b37bb"
+  }
+}

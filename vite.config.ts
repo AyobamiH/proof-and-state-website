@@ -13,14 +13,16 @@ export default defineConfig(async ({ command, mode }) => {
   const devPlugins = [];
   if (mode === "development") {
     const { devtools } = await import("@tanstack/devtools-vite");
-    devPlugins.push(devtools({
-      logging: false,
-      eventBusConfig: { enabled: false },
-      enhancedLogs: { enabled: false },
-      consolePiping: { enabled: false },
-      removeDevtoolsOnBuild: false,
-      injectSource: { enabled: true },
-    }));
+    devPlugins.push(
+      devtools({
+        logging: false,
+        eventBusConfig: { enabled: false },
+        enhancedLogs: { enabled: false },
+        consolePiping: { enabled: false },
+        removeDevtoolsOnBuild: false,
+        injectSource: { enabled: true },
+      }),
+    );
   }
   return {
     plugins: [
@@ -44,23 +46,46 @@ export default defineConfig(async ({ command, mode }) => {
     css: { transformer: "lightningcss" },
     resolve: {
       alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
-      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
+      dedupe: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@tanstack/react-query",
+        "@tanstack/query-core",
+      ],
     },
     optimizeDeps: {
-      include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "react/jsx-dev-runtime"],
+      include: [
+        "react",
+        "react-dom",
+        "react-dom/client",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+      ],
       ignoreOutdatedRequests: true,
     },
-    ...(developmentBuild ? {
-      environments: { client: { define: { "process.env.NODE_ENV": JSON.stringify("development") } } },
-      esbuild: { keepNames: true },
-    } : {}),
+    ...(developmentBuild
+      ? {
+          environments: {
+            client: { define: { "process.env.NODE_ENV": JSON.stringify("development") } },
+          },
+          esbuild: { keepNames: true },
+        }
+      : {}),
     server: {
       host: "127.0.0.1",
       port: 8080,
       strictPort: true,
       hmr: { overlay: true },
       watch: {
-        ignored: ["**/.workspace/**", "**/.agents/**", "**/.claude/**", "**/.tanstack/tmp/**", "**/branding-evidence/**"],
+        ignored: [
+          "**/.workspace/**",
+          "**/.agents/**",
+          "**/.claude/**",
+          "**/.tanstack/tmp/**",
+          "**/branding-evidence/**",
+        ],
         awaitWriteFinish: { stabilityThreshold: 1000, pollInterval: 100 },
       },
     },

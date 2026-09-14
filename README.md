@@ -26,8 +26,14 @@ Run the same checks enforced by CI:
 ```sh
 bun run lint
 bunx tsc --noEmit
+bun run test:toolchain
+python3 -m unittest discover -s tests -v
+python3 scripts/verify_branding.py --assets public
 bun run build
+bash scripts/check_built_branding.sh
 ```
+
+The dev server binds to `127.0.0.1:8080`; external exposure requires an intentional CLI override. Only `VITE_` environment variables are public. See `docs/TOOLCHAIN.md` for the capability audit and diagnostics boundaries.
 
 The production build is emitted to `.output/`.
 
@@ -40,7 +46,7 @@ The deployment workflow runs only after changes reach `main` and requires these 
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 
-Lovable is not part of the production request or deployment path.
+Build configuration, client diagnostics and deployment are owned here. No Lovable package or editor bridge is required. Historical design provenance is retained under `docs/history/`.
 
 ## Truth boundaries
 

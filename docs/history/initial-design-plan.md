@@ -1,3 +1,5 @@
+> Historical initial design brief, preserved from the imported scaffold. Not the current runtime specification. Product status, routes, hosting, metadata and branding have since changed. Use src/, Wrangler and current CI.
+
 # Proof & State — Information Architecture, Visual System and Discoverability Plan
 
 Current state: 5 routes (`/`, `/products`, `/architecture`, `/trust`, `/developers`), a `ps/` component set (proof pipeline, architecture diagram, evidence console, product modules, state timeline, terminal), semantic state tokens already defined in `src/styles.css` (verified / risky / unproven / terminal), `public/robots.txt` present, no sitemap, no llms.txt.

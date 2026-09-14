@@ -34,11 +34,13 @@ export function createRuntimeReporter(
       }
       count++;
       const status = error instanceof Response ? error.status : undefined;
-      emit(Object.freeze({
-        service: "proof-and-state-website",
-        kind,
-        ...(status === undefined ? {} : { status }),
-      }));
+      emit(
+        Object.freeze({
+          service: "proof-and-state-website",
+          kind,
+          ...(status === undefined ? {} : { status }),
+        }),
+      );
       return true;
     } catch {
       return false;
