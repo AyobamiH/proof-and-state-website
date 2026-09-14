@@ -1,5 +1,5 @@
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -8,7 +8,7 @@ import { nitro } from "nitro/vite";
 import { proofStateDiagnostics } from "./tools/vite-diagnostics";
 
 /** Proof & State owns this composition; upstream tools keep their own identities. */
-export default defineConfig(async ({ command, mode }) => {
+export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
   const developmentBuild = command === "build" && mode === "development";
   const devPlugins = [];
   if (mode === "development") {
