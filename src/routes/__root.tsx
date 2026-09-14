@@ -43,6 +43,7 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  if (typeof window === "undefined") console.error(error);
   const router = useRouter();
   useEffect(() => {
     reportRuntimeError(error, "route-boundary");

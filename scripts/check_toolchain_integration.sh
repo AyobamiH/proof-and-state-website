@@ -9,6 +9,16 @@ trap 'if [ -n "$pid" ]; then kill "$pid" 2>/dev/null || true; fi; rm -rf "$fixtu
 git archive HEAD | tar -x -C "$fixture"
 ln -s "$root/node_modules" "$fixture/node_modules"
 cd "$fixture"
+bun run dev --port 8792 > "$root/branding-evidence/dev-server.log" 2>&1 &
+pid=$!
+for i in $(seq 1 60); do
+ if curl -fsS http://127.0.0.1:8792/ >/dev/null; then break;fi
+ if ! kill -0 "$pid" 2>/dev/null || [ "$i" -eq 60 ]; then cat "$root/branding-evidence/dev-server.log";exit 1;fi
+ sleep 2
+done
+python3 "$root/scripts/browser_acceptance.py" --origin http://127.0.0.1:8792 --hmr-source "$fixture/src/components/ps/nav.tsx" --report "$root/branding-evidence/dev-browser.json"
+kill "$pid" 2>/dev/null || true
+pid=""
 mkdir -p src/server
 printf 'export const guarded = "PS_PRIVATE_ENV_MUST_NOT_LEAK";\n' > src/server/protected.ts
 printf '\nimport { guarded } from "./server/protected"; console.info(guarded);\n' >> src/client.tsx

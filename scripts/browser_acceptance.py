@@ -8,10 +8,13 @@ from playwright.sync_api import sync_playwright, expect
 p=argparse.ArgumentParser()
 p.add_argument('--origin',default='http://127.0.0.1:8787')
 p.add_argument('--fixture',action='store_true')
+p.add_argument('--hmr-source',type=Path)
 p.add_argument('--report',type=Path,required=True)
 a=p.parse_args()
 if a.fixture and a.origin != 'http://127.0.0.1:8791':
     raise SystemExit('Fixtures are local-only')
+if a.hmr_source and a.origin != 'http://127.0.0.1:8792':
+    raise SystemExit('HMR test writes are local-only')
 a.report.parent.mkdir(parents=True,exist_ok=True)
 rows=[]
 with sync_playwright() as pw:
@@ -46,6 +49,16 @@ with sync_playwright() as pw:
         page.screenshot(path=str(a.report.parent/('mobile.png' if mobile else 'desktop.png')),full_page=True)
         rows.append({'viewport':'mobile' if mobile else 'desktop','hydration_navigation_theme':'passed','vendor_requests':0,'page_errors':0,'diagnostic_listener':'passed'})
         context.close()
+    if a.hmr_source:
+        page=browser.new_page(viewport={'width':1440,'height':1000})
+        page.goto(a.origin+'/',wait_until='networkidle')
+        text=a.hmr_source.read_text()
+        try:
+            a.hmr_source.write_text(text.replace('Explore the system','Owned HMR verified'))
+            expect(page.get_by_role('link',name='Owned HMR verified',exact=True)).to_be_visible(timeout=15000)
+            rows.append({'native_dev_hmr':'passed'})
+        finally:
+            a.hmr_source.write_text(text)
     if a.fixture:
         page=browser.new_page()
         page.goto(a.origin+'/toolchain-acceptance-fixture',wait_until='networkidle')

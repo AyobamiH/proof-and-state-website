@@ -1,82 +1,77 @@
 name: Deploy website to Cloudflare
-
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "src/**"
       - "public/**"
       - "scripts/**"
       - "tests/**"
+      - "tools/**"
       - "package.json"
       - "bun.lock"
+      - "bunfig.toml"
       - "vite.config.ts"
       - "tsconfig.json"
       - "wrangler.jsonc"
       - ".github/workflows/deploy-cloudflare.yml"
-
 permissions:
   contents: read
-
 concurrency:
   group: proof-and-state-website-production
   cancel-in-progress: false
-
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
     steps:
       - name: Check out repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
-
+          persist-credentials: false
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
       - name: Require Cloudflare deployment secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
       - name: Verify source
         run: |
           bun run lint
           bunx tsc --noEmit
+          bun run test:toolchain
           python3 -m unittest discover -s tests -v
           python3 scripts/verify_branding.py --assets public --report branding-evidence/source.json
-
       - name: Observe existing production identity before deployment
         run: python3 scripts/verify_branding.py --observe --origin https://proofandstate.com --report branding-evidence/before.json
-
       - name: Build Cloudflare Worker
         run: bun run build
-
-      - name: Verify exact built Worker branding before deploy
-        run: bash scripts/check_built_branding.sh
-
+      - name: Verify exact built Worker and owned toolchain before deploy
+        run: |
+          python3 scripts/verify_toolchain.py --built --report branding-evidence/toolchain.json
+          bash scripts/check_built_branding.sh
       - name: Deploy exact main commit
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx --yes wrangler@4.127.0 deploy --config .output/server/wrangler.json
-
       - name: Verify canonical production routes
         shell: bash
         run: |
           set -euo pipefail
-
           for attempt in $(seq 1 18); do
-            homepage="$(curl --fail --silent --show-error https://proofandstate.com/ || true)"
-            if grep --fixed-strings --quiet "Let AI move faster without losing review." <<<"$homepage" \
-              && ! grep --fixed-strings --quiet "AWAITING_VERIFICATION" <<<"$homepage"; then
+            curl --fail --silent --show-error https://proofandstate.com/ > branding-evidence/home.html || true
+            if grep --fixed-strings --quiet "Let AI move faster without losing review." branding-evidence/home.html \
+              && ! grep --fixed-strings --quiet "AWAITING_VERIFICATION" branding-evidence/home.html; then
               break
             fi
             if [ "$attempt" -eq 18 ]; then
@@ -85,21 +80,25 @@ jobs:
             fi
             sleep 10
           done
-
-          status_page="$(curl --fail --silent --show-error https://proofandstate.com/status)"
-          grep --fixed-strings --quiet "Current product reality" <<<"$status_page"
-          grep --fixed-strings --quiet "AgentProof" <<<"$status_page"
-          grep --fixed-strings --quiet "In development" <<<"$status_page"
-
+          curl --fail --silent --show-error https://proofandstate.com/status > branding-evidence/status.html
+          grep --fixed-strings --quiet "Current product reality" branding-evidence/status.html
+          grep --fixed-strings --quiet "AgentProof" branding-evidence/status.html
+          grep --fixed-strings --quiet "In development" branding-evidence/status.html
           location="$(curl --silent --show-error --head https://www.proofandstate.com/ | awk 'BEGIN { IGNORECASE=1 } /^location:/ { sub(/\r$/, "", $2); print $2; exit }')"
           test "$location" = "https://proofandstate.com/"
-
       - name: Verify production branding bytes and SSR metadata
         run: |
           python3 scripts/verify_branding.py --assets .output/public \
             --origin https://proofandstate.com --www --attempts 6 \
             --report branding-evidence/production.json
-
+      - name: Verify deployed owned bundles
+        run: python3 scripts/verify_toolchain.py --built --origin https://proofandstate.com --report branding-evidence/production-toolchain.json
+      - name: Browser readback of the live deployment
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ps-browser"
+          "$RUNNER_TEMP/ps-browser/bin/pip" install playwright==1.58.0
+          "$RUNNER_TEMP/ps-browser/bin/playwright" install --with-deps chromium
+          "$RUNNER_TEMP/ps-browser/bin/python" scripts/browser_acceptance.py --origin https://proofandstate.com --report branding-evidence/production-browser.json
       - name: Preserve production branding evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
