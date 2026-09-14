@@ -10,10 +10,10 @@ Run 34805597832 retained the installed source, project snapshot, resolved config
 and generated Wrangler contract in `owned-toolchain-source-audit`.
 The executable factory, not just its comments or declarations, informed this migration.
 
-The package WAS related to the build even though hosting was already independent.
-This replaces its composition, not the underlying open-source projects with pretend
-in-house copies. TanStack, React, Vite, Tailwind, Lightning CSS and Nitro retain their
-upstream names and licences. No vendor source was copied into the replacement.
+The package was related to the build even though hosting was already independent.
+This replaces its composition, not the underlying open-source projects with in-house
+copies. TanStack, React, Vite, Tailwind, Lightning CSS and Nitro retain their upstream
+names and licences. No vendor source was copied into the replacement.
 
 ## Capability mapping
 
@@ -24,7 +24,7 @@ upstream names and licences. No vendor source was copied into the replacement.
 | Tailwind and Lightning CSS transformation | Direct plugins and explicit CSS transformer; existing locked Lightning CSS 1.33.0 promoted to a direct dependency |
 | TypeScript aliases and React/query deduplication | Explicit alias, tsconfig-paths, six dedupe entries and existing optimiser entries |
 | VITE_ environment definitions | Native Vite prefix boundary; explicit public/private canary build tests |
-| Development builds with development React | Existing client NODE_ENV and keepNames behaviour retained |
+| Development builds with development React | Client NODE_ENV retained; intended name preservation now uses native Rolldown output.keepNames |
 | Devtools source inspection | Direct locked TanStack devtools 0.8.3 in development, no editor bridge or console piping |
 | Local watch debounce | Explicit 1s stability / 100ms poll and owned temporary-folder ignores |
 | All-interface port 8080 default | Port retained, intentionally tightened to loopback and strict port; native HMR overlay enabled |
@@ -35,6 +35,11 @@ upstream names and licences. No vendor source was copied into the replacement.
 | Four package-age exemptions | Removed; the 24-hour installation guard remains |
 | Editor workspace metadata | Removed; complete design brief retained as superseded history |
 
+The first native type-check exposed the wrapper's obsolete `esbuild.keepNames` option:
+Vite 8's `ESBuildOptions` does not accept it. The replacement uses
+`build.rolldownOptions.output.keepNames`, not a type cast or a suppressed diagnostic.
+The normal production build remains minified; this option applies to development builds.
+
 ## Diagnostics and privacy boundary
 
 Browser events are local `proof-state:runtime-error` CustomEvents and console signals.
@@ -44,10 +49,10 @@ are deduplicated and limited to 20 per minute. Local development also prints the
 error for debugging. React callbacks use supported hydrateRoot options rather than
 patching a minified React bundle. Listener disposal supports hot reload.
 
-There is no invented telemetry backend: browser events are NOT durable remote alerts.
-Server diagnostics continue through existing console/Error cause-chain handling and
-Cloudflare observability. The existing five-second server error capture is preserved,
-not newly claimed to provide request-scoped distributed tracing.
+Browser events are not durable remote alerts. Server diagnostics continue through
+existing console/Error cause-chain handling and Cloudflare observability. The existing
+five-second server error capture is preserved, not newly claimed to provide
+request-scoped distributed tracing.
 
 `proof-state:server-error` is a local Vite HMR signal for 5xx responses, with no raw
 request/error data. Vite's own transform/build errors remain visible in its terminal
@@ -62,8 +67,9 @@ HTTP 200 error envelopes are not falsely described as 5xx notifications.
   unchanged protected source and the generated deployment contract. Bare product
   ecosystem mentions and historical provenance are intentionally not executable markers.
 - `scripts/check_toolchain_integration.sh` uses an isolated archived workspace for
-  negative import protection, explicit environment probes, browser hydration/navigation,
-  successful/failing server functions and a cross-origin POST denial. Fixtures never ship.
+  native development/HMR, negative import protection, explicit environment probes,
+  browser hydration/navigation, successful/failing server functions and a cross-origin
+  POST denial. Fixtures never ship.
 - Existing branding checks run against the exact built Worker and production.
 - Production toolchain readback compares the delivered JS/CSS bytes with the deployed
   build. Browser readback uses desktop/mobile layouts and retains screenshots.
@@ -82,4 +88,6 @@ Rollback uses the prior Cloudflare deployment version and re-verifies prior cont
 - https://react.dev/reference/react-dom/client/hydrateRoot
 - https://vite.dev/guide/env-and-mode
 - https://vite.dev/config/server-options
+- https://vite.dev/guide/migration
+- https://rolldown.rs/reference/Interface.OutputOptions#keepnames
 - https://nitro.build/deploy/providers/cloudflare
