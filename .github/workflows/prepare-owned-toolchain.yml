@@ -22,9 +22,10 @@ jobs:
           python3 scripts/prepare_owned_once.py
           bun install --frozen-lockfile
           bunx prettier --write vite.config.ts tools/vite-diagnostics.ts src/client.tsx src/lib/runtime-diagnostics.ts src/routes/__root.tsx tests/toolchain.test.ts tsconfig.json package.json
-          rm scripts/prepare_owned_once.py .github/workflows/prepare-owned-toolchain.yml
+          rm scripts/prepare_owned_once.py
+          git restore --source=HEAD -- .github/workflows
           git config user.name 'Ayobami Haastrup'
           git config user.email '47716486+AyobamiH@users.noreply.github.com'
           git add -A
-          git commit -m 'Complete owned toolchain composition and remove one-shot preparation'
+          git commit -m 'Complete owned application toolchain and preserve exact dependency versions'
           git push origin HEAD:refactor/proof-state-owned-toolchain
