@@ -1,0 +1,21 @@
+# Mutable legacy discovery URLs must revalidate. Never apply immutable to these.
+/favicon.ico
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+/apple-touch-icon.png
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+/apple-touch-icon-precomposed.png
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+/brand/proof-and-state-*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+/site.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+# v1 is an immutable identity release, not a build-number or timestamp.
+/brand/v1/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff

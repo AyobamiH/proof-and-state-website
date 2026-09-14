@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav, StatusBar } from "@/components/ps/nav";
 import { SiteFooter } from "@/components/ps/footer";
 import { THEME_INIT_SCRIPT } from "@/components/ps/theme-toggle";
+import { BRAND_LINKS, BRAND_MARK } from "@/content/brand";
 import { GITHUB_URL, SITE_NAME, SITE_URL, SYSTEM_DEFINITION } from "@/content/site";
 
 function NotFoundComponent() {
@@ -88,19 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/brand/proof-and-state-mark.svg", type: "image/svg+xml" },
-      {
-        rel: "icon",
-        href: "/brand/proof-and-state-favicon-32.png",
-        type: "image/png",
-        sizes: "32x32",
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      {
-        rel: "apple-touch-icon",
-        href: "/brand/proof-and-state-apple-touch-icon.png",
-        sizes: "180x180",
-      },
+      ...BRAND_LINKS,
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -119,7 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@id": `${SITE_URL}/#organization`,
               name: SITE_NAME,
               url: SITE_URL,
-              logo: `${SITE_URL}/brand/proof-and-state-mark.svg`,
+              logo: `${SITE_URL}${BRAND_MARK}`,
               description: SYSTEM_DEFINITION,
               sameAs: [GITHUB_URL],
             },
