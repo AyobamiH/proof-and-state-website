@@ -1,3 +1,4 @@
+import { BRAND_IMAGE_ALT, BRAND_SHARE_IMAGE } from "@/content/brand";
 import { SITE_NAME, SITE_URL } from "@/content/site";
 
 export type HeadInput = {
@@ -12,6 +13,7 @@ export type HeadInput = {
 export function buildHead({ title, description, path, type = "website" }: HeadInput) {
   const url = `${SITE_URL}${path}`;
   const fullTitle = path === "/" ? title : `${title} — ${SITE_NAME}`;
+  const image = `${SITE_URL}${BRAND_SHARE_IMAGE}`;
   return {
     meta: [
       { title: fullTitle },
@@ -20,8 +22,15 @@ export function buildHead({ title, description, path, type = "website" }: HeadIn
       { property: "og:description", content: description },
       { property: "og:url", content: url },
       { property: "og:type", content: type },
+      { property: "og:image", content: image },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:alt", content: BRAND_IMAGE_ALT },
       { name: "twitter:title", content: fullTitle },
       { name: "twitter:description", content: description },
+      { name: "twitter:image", content: image },
+      { name: "twitter:image:alt", content: BRAND_IMAGE_ALT },
     ],
     links: [{ rel: "canonical", href: url }],
   };

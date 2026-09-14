@@ -36,5 +36,21 @@ jobs:
       - name: Type-check
         run: bunx tsc --noEmit
 
+      - name: Branding regression tests
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 scripts/verify_branding.py --assets public --report branding-evidence/source.json
+
       - name: Build
         run: bun run build
+
+      - name: Verify built Worker branding before merge
+        run: bash scripts/check_built_branding.sh
+
+      - name: Preserve branding acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: branding-ci-${{ github.run_id }}
+          path: branding-evidence/
+          retention-days: 30

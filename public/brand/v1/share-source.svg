@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f6f3"/>
+  <path d="M72 76H1128M72 548H1128" stroke="#d8d9db" stroke-width="2"/>
+  <svg x="76" y="122" width="124" height="124" viewBox="0 0 96 96"><rect x="2" y="2" width="92" height="92" rx="18" fill="#f7f6f3"/>
+  <rect x="2.5" y="2.5" width="91" height="91" rx="17.5" fill="none" stroke="#d8d9db"/>
+  <path d="M24 56V29L47 15L72 30V42L53 53"
+        fill="none" stroke="#171819" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 51L79 57V70L50 86L25 72"
+        fill="none" stroke="#606268" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M27 50L36 44L44 50L35 57Z" fill="#1d6294"/>
+  <circle cx="45" cy="55" r="7.2" fill="#2b7444" stroke="#f7f6f3" stroke-width="2.5"/>
+  <path d="M52 58L61 52L70 59L61 66Z" fill="#bc5d24"/>
+</svg>
+  <text x="230" y="207" font-family="Liberation Sans, Arial, sans-serif" font-size="62" font-weight="bold" fill="#171819">Proof &amp; State</text>
+  <text x="76" y="344" font-family="Liberation Sans, Arial, sans-serif" font-size="46" fill="#171819">Evidence for AI-assisted</text>
+  <text x="76" y="402" font-family="Liberation Sans, Arial, sans-serif" font-size="46" fill="#171819">software delivery.</text>
+  <rect x="76" y="469" width="30" height="6" rx="3" fill="#1d6294"/>
+  <rect x="118" y="469" width="30" height="6" rx="3" fill="#2b7444"/>
+  <rect x="160" y="469" width="30" height="6" rx="3" fill="#bc5d24"/>
+  <text x="1128" y="492" text-anchor="end" font-family="Liberation Sans, Arial, sans-serif" font-size="25" fill="#606268">proofandstate.com</text>
+</svg>

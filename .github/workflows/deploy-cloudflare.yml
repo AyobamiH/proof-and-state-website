@@ -8,6 +8,8 @@ on:
     paths:
       - "src/**"
       - "public/**"
+      - "scripts/**"
+      - "tests/**"
       - "package.json"
       - "bun.lock"
       - "vite.config.ts"
@@ -51,9 +53,17 @@ jobs:
         run: |
           bun run lint
           bunx tsc --noEmit
+          python3 -m unittest discover -s tests -v
+          python3 scripts/verify_branding.py --assets public --report branding-evidence/source.json
+
+      - name: Observe existing production identity before deployment
+        run: python3 scripts/verify_branding.py --observe --origin https://proofandstate.com --report branding-evidence/before.json
 
       - name: Build Cloudflare Worker
         run: bun run build
+
+      - name: Verify exact built Worker branding before deploy
+        run: bash scripts/check_built_branding.sh
 
       - name: Deploy exact main commit
         run: npx --yes wrangler@4.127.0 deploy --config .output/server/wrangler.json
@@ -83,3 +93,17 @@ jobs:
 
           location="$(curl --silent --show-error --head https://www.proofandstate.com/ | awk 'BEGIN { IGNORECASE=1 } /^location:/ { sub(/\r$/, "", $2); print $2; exit }')"
           test "$location" = "https://proofandstate.com/"
+
+      - name: Verify production branding bytes and SSR metadata
+        run: |
+          python3 scripts/verify_branding.py --assets .output/public \
+            --origin https://proofandstate.com --www --attempts 6 \
+            --report branding-evidence/production.json
+
+      - name: Preserve production branding evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: branding-production-${{ github.sha }}-${{ github.run_attempt }}
+          path: branding-evidence/
+          retention-days: 90
