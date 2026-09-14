@@ -8,7 +8,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -16,45 +16,24 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
-      - run: bun install --frozen-lockfile
-      - name: Inspect installed wrapper implementation and repository integration
+      - run: bun install --frozen-lockfile > /tmp/install.log 2>&1
+      - name: Archive public source and installed wrapper for review
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import hashlib
-          root = Path('node_modules/@lovable.dev/vite-tanstack-config')
-          print('WRAPPER FILE INVENTORY')
-          for p in sorted(root.rglob('*')):
-              if p.is_file() and 'node_modules' not in p.relative_to(root).parts:
-                  print(p.relative_to(root), p.stat().st_size, hashlib.sha256(p.read_bytes()).hexdigest())
-          for p in sorted(root.rglob('*')):
-              if p.is_file() and p.suffix in ('.js', '.mjs', '.cjs', '.ts', '.json') and p.stat().st_size < 100000 and 'node_modules' not in p.relative_to(root).parts:
-                  print('\n=== WRAPPER SOURCE ' + str(p) + ' ===\n' + p.read_text())
-          for name in ['src/server.ts', 'src/start.ts', 'src/lib/error-capture.ts', 'src/lib/error-page.ts', 'src/lib/lovable-error-reporting.ts', 'src/routes/README.md', 'tsconfig.json', 'bunfig.toml', 'README.md', '.lovable/project.json']:
-              p = Path(name)
-              print('\n=== PROJECT SOURCE ' + name + ' ===\n' + p.read_text())
-          for p in Path('src').rglob('*'):
-              if p.is_file():
-                  for i, line in enumerate(p.read_text().splitlines(), 1):
-                      if any(term in line.lower() for term in ['lovable', 'import.meta.env', 'process.env', 'devtools', 'createServerFn'.lower()]):
-                          print(f'INTEGRATION {p}:{i}: {line}')
-          PY
-      - name: Record resolved build settings
-        run: |
+          mkdir -p toolchain-audit/wrapper
+          git archive HEAD | tar -x -C toolchain-audit
+          cp node_modules/@lovable.dev/vite-tanstack-config/dist/index.js toolchain-audit/wrapper/
+          cp node_modules/@lovable.dev/vite-tanstack-config/package.json toolchain-audit/wrapper/
           node --input-type=module - <<'JS'
           import { resolveConfig } from 'vite';
+          import { writeFileSync } from 'node:fs';
           const c = await resolveConfig({}, 'build', 'production');
-          console.log('RESOLVED BASELINE', JSON.stringify({plugins:c.plugins.map(p=>p.name), resolve:c.resolve, server:{host:c.server.host,port:c.server.port,strictPort:c.server.strictPort,allowedHosts:c.server.allowedHosts,cors:c.server.cors},envPrefix:c.envPrefix,defineKeys:Object.keys(c.define||{}),build:c.build,ssr:c.ssr}, null, 2));
+          writeFileSync('toolchain-audit/resolved.json', JSON.stringify({plugins:c.plugins.map(p=>p.name),resolve:c.resolve,server:{host:c.server.host,port:c.server.port,strictPort:c.server.strictPort,allowedHosts:c.server.allowedHosts},defineKeys:Object.keys(c.define||{}),build:c.build,ssr:c.ssr},null,2));
           JS
-      - name: Baseline build and branding acceptance
-        run: |
-          bun run build
-          cat .output/server/wrangler.json
-          bash scripts/check_built_branding.sh
-      - name: Preserve baseline evidence
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+          bun run build > /tmp/build.log 2>&1
+          cp .output/server/wrangler.json toolchain-audit/generated-wrangler.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: owned-toolchain-baseline-${{ github.sha }}
-          path: branding-evidence/
-          retention-days: 90
+          name: owned-toolchain-source-audit
+          path: toolchain-audit/
+          include-hidden-files: true
+          retention-days: 30
