@@ -70,7 +70,8 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
           environments: {
             client: { define: { "process.env.NODE_ENV": JSON.stringify("development") } },
           },
-          esbuild: { keepNames: true },
+          // Vite 8 uses Rolldown; the inherited esbuild.keepNames option was obsolete.
+          build: { rolldownOptions: { output: { keepNames: true } } },
         }
       : {}),
     server: {

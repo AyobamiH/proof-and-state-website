@@ -24,17 +24,26 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
       - name: Lint
-        run: bun run lint
+        run: |
+          set -o pipefail
+          mkdir -p branding-evidence
+          bun run lint 2>&1 | tee branding-evidence/lint.log
       - name: Type-check
-        run: bunx tsc --noEmit
+        run: |
+          set -o pipefail
+          bunx tsc --noEmit 2>&1 | tee branding-evidence/types.log
       - name: Owned toolchain unit tests
-        run: bun run test:toolchain
+        run: |
+          set -o pipefail
+          bun run test:toolchain 2>&1 | tee branding-evidence/unit-tests.log
       - name: Branding regression tests
         run: |
           python3 -m unittest discover -s tests -v
           python3 scripts/verify_branding.py --assets public --report branding-evidence/source.json
       - name: Build
-        run: bun run build
+        run: |
+          set -o pipefail
+          bun run build 2>&1 | tee branding-evidence/build.log
       - name: Verify built Worker and owned toolchain before merge
         run: |
           python3 scripts/verify_toolchain.py --built --report branding-evidence/toolchain.json
